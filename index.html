@@ -84,7 +84,7 @@
       <p class="section-label">Categoria 01</p>
       <h2>POLTRONE<br>LAVAGGIO</h2>
     </div>
-    <p class="section-count">24 modelli</p>
+    <p class="section-count">13 modelli</p>
   </div>
   <div class="products-grid" id="products-lavaggio"></div>
   <div class="spa-header"><h3>RETROLAVAGGIO &amp; SPA</h3></div>
@@ -151,30 +151,11 @@ const lavaggio = [
   {"code": "FM09", "price": "490€", "colors": ["black"], "img": "Images 2/foto13.png"},
   {"code": "FM10 Massage", "price": "1.190€", "colors": ["gray"], "img": "Images 2/foto14.png"},
   {"code": "FM11", "price": "980€", "colors": ["black"], "img": "Images 2/foto15.png"},
-  {"code": "FM12", "price": "820€", "colors": ["black"], "img": "Images 2/foto16.jpg"},
-  {"code": "FM13", "price": "730€", "colors": ["orange", "black", "gray", "gold", "beige"], "img": "Images 2/foto17.jpg"},
-  {"code": "FM14", "price": "730€", "colors": ["black", "orange"], "img": "Images 2/foto18.jpg"},
-  {"code": "FM15", "price": "730€", "colors": ["black", "orange"], "img": "Images 2/foto19.jpg"},
-  {"code": "FM16", "price": "790€", "colors": ["black"], "img": "Images 2/foto20.jpg"},
-  {"code": "FM17", "price": "730€", "colors": ["black", "gray"], "img": "Images 2/foto21.jpg"},
-  {"code": "FM18", "price": "1.450€", "colors": ["black", "brown"], "img": "Images 2/foto22.jpg"},
-  {"code": "FM19", "price": "490€", "colors": ["white"], "img": "Images 2/foto23.jpg"},
-  {"code": "FM20", "price": "740€", "colors": ["white"], "img": "Images 2/foto24.jpg"},
-  {"code": "FM21", "price": "790€", "colors": ["black"], "img": "Images 2/foto25.jpg"},
-  {"code": "FM22", "price": "790€", "colors": ["black"], "img": "Images 2/foto26.jpg"},
-  {"code": "FM23", "price": "820€", "colors": ["white"], "img": "Images 2/foto27.jpg"},
-  {"code": "FM24", "price": "730€", "colors": ["black", "brown"], "img": "Images 2/foto28.jpg"}
+  {"code": "FM12", "price": "Prezzo su richiesta", "colors": ["black"], "img": "images3/FM12/1.jpg"},
+  {"code": "FM13", "price": "Prezzo su richiesta", "colors": ["black", "brown", "white", "gold", "beige"], "img": "images3/FM13/A1.jpg"}
 ];
 
-const spa = [
-  {"code": "FMSPA1", "price": "1.950€", "colors": ["beige"], "img": "Images 2/foto29.jpg"},
-  {"code": "FMSPA2", "price": "1.950€", "colors": ["black", "gray", "beige"], "img": "Images 2/foto30.jpg"},
-  {"code": "FMSPA3", "price": "790€", "colors": ["black"], "img": "Images 2/foto31.jpg"},
-  {"code": "FMSPA4", "price": "2.050€", "colors": ["white", "black", "brown"], "img": "Images 2/foto32.jpg"},
-  {"code": "FMSPA5", "price": "1.750€", "colors": ["black"], "img": "Images 2/foto33.jpg"},
-  {"code": "FMSPA6", "price": "2.050€", "colors": ["beige"], "img": "Images 2/foto34.jpg"},
-  {"code": "FMSPA7", "price": "2.110€", "colors": ["black"], "img": "Images 2/foto35.jpg"}
-];
+const spa = [];
 
 const versionsData = {
   "FM01": [
@@ -229,26 +210,69 @@ const versionsData = {
   "FM09": [{"code": "FM09", "label": "FM09", "description": "Mobile retrolavaggio con vasca — L 58 cm · P 48 cm · H 92,5 cm · Vasca 58 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto100.png"}]}],
   "FM10 Massage": [{"code": "FM10 Massage", "label": "FM10 Massage", "description": "Poltrona lavaggio con funzione massaggio — L 91,5 cm · P 71 cm · H 71 cm · Seduta 42×50 cm · Schienale 80 cm · Vasca 50×57 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto101.png"}]}],
   "FM11": [{"code": "FM11", "label": "FM11", "description": "Poltrona lavaggio stile vintage", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto102.png"}]}],
-  "FM12": [{"code": "FM12", "label": "FM12", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto16.jpg"}]}],
-  "FM13": [{"code": "FM13", "label": "FM13", "description": "Poltrona lavaggio", "variants": [{"color": "Arancione", "dot": "orange", "img": "Images 2/foto17.jpg"}, {"color": "Nero", "dot": "black", "img": "Images 2/foto17.jpg"}, {"color": "Grigio", "dot": "gray", "img": "Images 2/foto17.jpg"}, {"color": "Gold", "dot": "gold", "img": "Images 2/foto17.jpg"}, {"color": "Beige", "dot": "beige", "img": "Images 2/foto17.jpg"}]}],
-  "FM14": [{"code": "FM14", "label": "FM14", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto18.jpg"}, {"color": "Arancione", "dot": "orange", "img": "Images 2/foto18.jpg"}]}],
-  "FM15": [{"code": "FM15", "label": "FM15", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto19.jpg"}, {"color": "Arancione", "dot": "orange", "img": "Images 2/foto19.jpg"}]}],
-  "FM16": [{"code": "FM16", "label": "FM16", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto20.jpg"}]}],
-  "FM17": [{"code": "FM17", "label": "FM17", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto21.jpg"}, {"color": "Grigio", "dot": "gray", "img": "Images 2/foto21.jpg"}]}],
-  "FM18": [{"code": "FM18", "label": "FM18", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto22.jpg"}, {"color": "Marrone", "dot": "brown", "img": "Images 2/foto22.jpg"}]}],
-  "FM19": [{"code": "FM19", "label": "FM19", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto23.jpg"}]}],
-  "FM20": [{"code": "FM20", "label": "FM20", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto24.jpg"}]}],
-  "FM21": [{"code": "FM21", "label": "FM21", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto25.jpg"}]}],
-  "FM22": [{"code": "FM22", "label": "FM22", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto26.jpg"}]}],
-  "FM23": [{"code": "FM23", "label": "FM23", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto27.jpg"}]}],
-  "FM24": [{"code": "FM24", "label": "FM24", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto28.jpg"}, {"color": "Marrone", "dot": "brown", "img": "Images 2/foto28.jpg"}]}],
-  "FMSPA1": [{"code": "FMSPA1", "label": "FMSPA1", "description": "Retrolavaggio SPA", "variants": [{"color": "Beige", "dot": "beige", "img": "Images 2/foto29.jpg"}]}],
-  "FMSPA2": [{"code": "FMSPA2", "label": "FMSPA2", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto30.jpg"}, {"color": "Grigio", "dot": "gray", "img": "Images 2/foto30.jpg"}, {"color": "Beige", "dot": "beige", "img": "Images 2/foto30.jpg"}]}],
-  "FMSPA3": [{"code": "FMSPA3", "label": "FMSPA3", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto31.jpg"}]}],
-  "FMSPA4": [{"code": "FMSPA4", "label": "FMSPA4", "description": "Retrolavaggio SPA", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto32.jpg"}, {"color": "Nero", "dot": "black", "img": "Images 2/foto32.jpg"}, {"color": "Marrone", "dot": "brown", "img": "Images 2/foto32.jpg"}]}],
-  "FMSPA5": [{"code": "FMSPA5", "label": "FMSPA5", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto33.jpg"}]}],
-  "FMSPA6": [{"code": "FMSPA6", "label": "FMSPA6", "description": "Retrolavaggio SPA", "variants": [{"color": "Beige", "dot": "beige", "img": "Images 2/foto34.jpg"}]}],
-  "FMSPA7": [{"code": "FMSPA7", "label": "FMSPA7", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto35.jpg"}]}]
+  "FM12": [
+    {
+      "code": "FM12", "label": "FM12", "price": "Prezzo su richiesta",
+      "description": "Poltrona lavaggio",
+      "specs": "<span style='opacity:0.4'>Vedi foto misure in galleria</span>",
+      "variants": [
+        {
+          "color": "Unica versione", "dot": "black",
+          "img": "images3/FM12/1.jpg",
+          "gallery": ["images3/FM12/2.jpg","images3/FM12/3.jpg","images3/FM12/4.jpg","images3/FM12/5.jpg","images3/FM12/6.jpg"]
+        }
+      ]
+    }
+  ],
+  "FM13": [
+    {
+      "code": "FM13", "label": "FM13", "price": "Prezzo su richiesta",
+      "description": "Poltrona lavaggio — disponibile in 8 varianti colore",
+      "specs": "<span style='opacity:0.4'>Vedi foto misure in galleria</span>",
+      "variants": [
+        {
+          "color": "Black / Pelle Orange", "dot": "orange",
+          "img": "images3/FM13/A1.jpg",
+          "gallery": ["images3/FM13/A2.jpg","images3/FM13/A3.jpg","images3/FM13/A4.jpg","images3/FM13/A5.jpg"]
+        },
+        {
+          "color": "Black / Pelle Brown", "dot": "brown",
+          "img": "images3/FM13/B1.jpg",
+          "gallery": ["images3/FM13/B2.jpg","images3/FM13/B3.jpg","images3/FM13/B4.jpg","images3/FM13/B5.jpg"]
+        },
+        {
+          "color": "White / Pelle Grey / Braccioli Black", "dot": "gray",
+          "img": "images3/FM13/C1.jpg",
+          "gallery": ["images3/FM13/C2.jpg","images3/FM13/C3.jpg","images3/FM13/C4.jpg","images3/FM13/C5.jpg","images3/FM13/C6.jpg","images3/FM13/C7.jpg"]
+        },
+        {
+          "color": "White / Pelle Grey / Braccioli Gold", "dot": "gold",
+          "img": "images3/FM13/D1.jpg",
+          "gallery": ["images3/FM13/D2.jpg","images3/FM13/D3.jpg","images3/FM13/D4.jpg","images3/FM13/D5.jpg","images3/FM13/D6.jpg"]
+        },
+        {
+          "color": "White / Pelle Beige / Braccioli Gold", "dot": "beige",
+          "img": "images3/FM13/E1.jpg",
+          "gallery": ["images3/FM13/E2.jpg","images3/FM13/E3.jpg","images3/FM13/E4.jpg","images3/FM13/E5.jpg","images3/FM13/E6.jpg","images3/FM13/E7.jpg"]
+        },
+        {
+          "color": "White / Pelle Beige / Braccioli Black", "dot": "beige",
+          "img": "images3/FM13/F1.jpg",
+          "gallery": ["images3/FM13/F2.jpg","images3/FM13/F3.jpg","images3/FM13/F4.jpg","images3/FM13/F5.jpg","images3/FM13/F6.jpg"]
+        },
+        {
+          "color": "White / Pelle Black / Braccioli Black", "dot": "black",
+          "img": "images3/FM13/G1.jpg",
+          "gallery": ["images3/FM13/G2.jpg","images3/FM13/G3.jpg","images3/FM13/G4.jpg"]
+        },
+        {
+          "color": "White / Pelle Grey / Braccioli Gold", "dot": "gold",
+          "img": "images3/FM13/H1.jpg",
+          "gallery": ["images3/FM13/H2.jpg","images3/FM13/H3.jpg","images3/FM13/H4.jpg","images3/FM13/H5.jpg","images3/FM13/H6.jpg"]
+        }
+      ]
+    }
+  ],
 };
 
 const colorLabels = {
