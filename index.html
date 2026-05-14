@@ -12,7 +12,7 @@
 <!-- HEADER -->
 <header>
   <a class="logo-wrap" onclick="showHome()" style="text-decoration:none;">
-    <img src="images/foto1.png" alt="FM Design">
+    <img src="Images 2/foto1.png" alt="FM Design">
     <span class="logo-text">DESIGN</span>
   </a>
   <nav>
@@ -27,7 +27,7 @@
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg-text">DESIGN</div>
-  <img src="images/foto2.png" class="hero-logo" alt="FM Design">
+  <img src="Images 2/foto2.png" class="hero-logo" alt="FM Design">
   <h1>FM<br>DESIGN</h1>
   <p class="hero-sub">FORNITURE PROFESSIONALI PER PARRUCCHIERI</p>
   <div class="hero-line"></div>
@@ -44,7 +44,7 @@
   </div>
   <div class="categories-grid">
     <div class="cat-card" onclick="showSection('lavaggio')">
-      <img src="images/foto3.png" alt="Poltrone Lavaggio" onerror="this.style.display='none'">
+      <img src="Images 2/foto3.png" alt="Poltrone Lavaggio" onerror="this.style.display='none'">
       <div class="cat-info"><p class="cat-num">01</p><p class="cat-name">Poltrone Lavaggio</p></div>
       <span class="cat-arrow">→</span>
     </div>
@@ -104,7 +104,7 @@
   <div class="footer-top">
     <div>
       <div class="footer-logo">
-        <img src="images/foto4.png" style="width:34px;height:34px;object-fit:contain;filter:invert(1);" alt="FM Design">
+        <img src="Images 2/foto4.png" style="width:34px;height:34px;object-fit:contain;filter:invert(1);" alt="FM Design">
         <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:6px;color:#f5f5f5">DESIGN</span>
       </div>
       <p class="footer-tagline">Forniture professionali per parrucchieri e centri benessere.</p>
@@ -136,9 +136,121 @@
 
 <script>
 // ─── DATA ───
-const lavaggio = [{"code": "FM01", "price": "da 850€", "colors": ["white", "black"], "img": "images/foto5.png"}, {"code": "FM02", "price": "850–990€", "colors": ["white", "black"], "img": "images/foto6.png"}, {"code": "FM03", "price": "850€", "colors": ["white", "black"], "img": "images/foto7.png"}, {"code": "FM04", "price": "790€", "colors": ["white", "black"], "img": "images/foto8.png"}, {"code": "FM05", "price": "810€", "colors": ["white", "black"], "img": "images/foto9.png"}, {"code": "FM06", "price": "980€", "colors": ["gold", "black", "white"], "img": "images/foto10.png"}, {"code": "FM07", "price": "790€", "colors": ["black"], "img": "images/foto11.png"}, {"code": "FM08", "price": "980€", "colors": ["beige", "black"], "img": "images/foto12.png"}, {"code": "FM09", "price": "490€", "colors": ["black"], "img": "images/foto13.png"}, {"code": "FM10 Massage", "price": "1.190€", "colors": ["gray"], "img": "images/foto14.png"}, {"code": "FM11", "price": "980€", "colors": ["black"], "img": "images/foto15.png"}, {"code": "FM12", "price": "820€", "colors": ["black"], "img": "images/foto16.jpg"}, {"code": "FM13", "price": "730€", "colors": ["orange", "black", "gray", "gold", "beige"], "img": "images/foto17.jpg"}, {"code": "FM14", "price": "730€", "colors": ["black", "orange"], "img": "images/foto18.jpg"}, {"code": "FM15", "price": "730€", "colors": ["black", "orange"], "img": "images/foto19.jpg"}, {"code": "FM16", "price": "790€", "colors": ["black"], "img": "images/foto20.jpg"}, {"code": "FM17", "price": "730€", "colors": ["black", "gray"], "img": "images/foto21.jpg"}, {"code": "FM18", "price": "1.450€", "colors": ["black", "brown"], "img": "images/foto22.jpg"}, {"code": "FM19", "price": "490€", "colors": ["white"], "img": "images/foto23.jpg"}, {"code": "FM20", "price": "740€", "colors": ["white"], "img": "images/foto24.jpg"}, {"code": "FM21", "price": "790€", "colors": ["black"], "img": "images/foto25.jpg"}, {"code": "FM22", "price": "790€", "colors": ["black"], "img": "images/foto26.jpg"}, {"code": "FM23", "price": "820€", "colors": ["white"], "img": "images/foto27.jpg"}, {"code": "FM24", "price": "730€", "colors": ["black", "brown"], "img": "images/foto28.jpg"}];
-const spa = [{"code": "FMSPA1", "price": "1.950€", "colors": ["beige"], "img": "images/foto29.jpg"}, {"code": "FMSPA2", "price": "1.950€", "colors": ["black", "gray", "beige"], "img": "images/foto30.jpg"}, {"code": "FMSPA3", "price": "790€", "colors": ["black"], "img": "images/foto31.jpg"}, {"code": "FMSPA4", "price": "2.050€", "colors": ["white", "black", "brown"], "img": "images/foto32.jpg"}, {"code": "FMSPA5", "price": "1.750€", "colors": ["black"], "img": "images/foto33.jpg"}, {"code": "FMSPA6", "price": "2.050€", "colors": ["beige"], "img": "images/foto34.jpg"}, {"code": "FMSPA7", "price": "2.110€", "colors": ["black"], "img": "images/foto35.jpg"}];
-const versionsData = {"FM01": [{"code": "FM01", "label": "FM01 — 850€", "price": "850€", "description": "Poltrona lavaggio con lavatesta", "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br>\n<b>Peso:</b> 73 kg<br>\n<b>Rivestimento:</b> PVC nero<br>\n<b>Struttura:</b> Interna in metallo<br>\n<b>Seduta:</b> Con molle interne · Imbottitura extra lombare<br>\n<b>Vasca:</b> Ceramica profonda · Meccanismo basculante · Bianca o Nera<br>\n<b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br>\n<b>Doccetta:</b> Cromata con tubo in poliammide<br>\n<b>Scarico:</b> Acciaio inox Ø 40mm<br>\n<b>Allacciamenti:</b> Fredda 3/8\" · Calda 3/8\" · Connessione elettrica<br>\n<b>Schienale:</b> Removibile senza attrezzi", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto36.png", "gallery": ["images/foto37.png", "images/foto38.png", "images/foto39.png", "images/foto40.png", "images/foto41.png"]}, {"color": "Nero", "dot": "black", "img": "images/foto42.png", "gallery": ["images/foto43.png", "images/foto44.png", "images/foto45.png", "images/foto46.png", "images/foto47.png"]}]}, {"code": "FM01+", "label": "FM01+ — 890€", "price": "890€", "description": "Con poggiapiedi ribaltabile manuale", "specs": "<b>Dimensioni:</b> 69 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle · Imbottitura extra lombare<br><b>Poggiapiedi:</b> Ribaltabile manuale in un unico pezzo<br><b>Vasca:</b> Ceramica profonda · Basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8' · Calda 3/8' · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi", "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br>\n<b>Peso:</b> 73 kg<br>\n<b>Rivestimento:</b> PVC nero<br>\n<b>Struttura:</b> Interna in metallo<br>\n<b>Seduta:</b> Con molle interne · Imbottitura extra lombare<br>\n<b>Vasca:</b> Ceramica profonda · Meccanismo basculante · Bianca o Nera<br>\n<b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br>\n<b>Doccetta:</b> Cromata con tubo in poliammide<br>\n<b>Scarico:</b> Acciaio inox Ø 40mm<br>\n<b>Allacciamenti:</b> Fredda 3/8\" · Calda 3/8\" · Connessione elettrica<br>\n<b>Schienale:</b> Removibile senza attrezzi<br><b>Alzagambe:</b> Manuale", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto48.png", "gallery": ["images/foto49.png", "images/foto50.png", "images/foto51.png", "images/foto52.png", "images/foto53.png"]}, {"color": "Nero", "dot": "black", "img": "images/foto54.png", "gallery": ["images/foto55.png", "images/foto56.png", "images/foto57.png", "images/foto58.png", "images/foto59.png"]}]}, {"code": "FM01+POWER", "label": "FM01+POWER — 990€", "price": "990€", "description": "Con alzagambe elettrico", "specs": "<b>Dimensioni:</b> 69 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle · Imbottitura extra lombare<br><b>Poggiapiedi:</b> Elettrico<br><b>Vasca:</b> Ceramica profonda · Basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8' · Calda 3/8' · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi", "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br>\n<b>Peso:</b> 73 kg<br>\n<b>Rivestimento:</b> PVC nero<br>\n<b>Struttura:</b> Interna in metallo<br>\n<b>Seduta:</b> Con molle interne · Imbottitura extra lombare<br>\n<b>Vasca:</b> Ceramica profonda · Meccanismo basculante · Bianca o Nera<br>\n<b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br>\n<b>Doccetta:</b> Cromata con tubo in poliammide<br>\n<b>Scarico:</b> Acciaio inox Ø 40mm<br>\n<b>Allacciamenti:</b> Fredda 3/8\" · Calda 3/8\" · Connessione elettrica<br>\n<b>Schienale:</b> Removibile senza attrezzi<br><b>Alzagambe:</b> Elettrico", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto60.png", "gallery": ["images/foto61.png", "images/foto62.png", "images/foto63.png", "images/foto64.png", "images/foto65.png"]}, {"color": "Nero", "dot": "black", "img": "images/foto66.png", "gallery": ["images/foto67.png", "images/foto68.png", "images/foto69.png", "images/foto70.png"]}]}, {"code": "FM01+POWER MASSAGE", "label": "FM01+POWER MASSAGE — 1.150€", "price": "1.150€", "description": "Alzagambe elettrico + massaggio ROLL", "specs": "<b>Dimensioni:</b> 69 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle · Imbottitura extra lombare<br><b>Poggiapiedi:</b> Elettrico reclinabile chaise-longue · Pulsantiera integrata<br><b>Massaggio:</b> Sistema ROLL integrato nello schienale · Piacevole e non aggressivo<br><b>Vasca:</b> Ceramica profonda · Basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8' · Calda 3/8' · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi", "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br>\n<b>Peso:</b> 73 kg<br>\n<b>Rivestimento:</b> PVC nero<br>\n<b>Struttura:</b> Interna in metallo<br>\n<b>Seduta:</b> Con molle interne · Imbottitura extra lombare<br>\n<b>Vasca:</b> Ceramica profonda · Meccanismo basculante · Bianca o Nera<br>\n<b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br>\n<b>Doccetta:</b> Cromata con tubo in poliammide<br>\n<b>Scarico:</b> Acciaio inox Ø 40mm<br>\n<b>Allacciamenti:</b> Fredda 3/8\" · Calda 3/8\" · Connessione elettrica<br>\n<b>Schienale:</b> Removibile senza attrezzi<br><b>Alzagambe:</b> Elettrico<br><b>Massaggio:</b> Incluso", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto71.png", "gallery": ["images/foto72.png", "images/foto73.png", "images/foto74.png", "images/foto75.png", "images/foto76.png"]}, {"color": "Nero", "dot": "black", "img": "images/foto77.png", "gallery": ["images/foto78.png", "images/foto79.png", "images/foto80.png", "images/foto81.png"]}]}], "FM02": [{"code": "FM02", "label": "FM02", "description": "Poltrona lavaggio base", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto82.png"}, {"color": "Nero", "dot": "black", "img": "images/foto83.png"}]}, {"code": "FM02+N", "label": "FM02+N", "description": "Alzagambe manuale", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto84.png"}, {"color": "Nero", "dot": "black", "img": "images/foto85.png"}]}, {"code": "FM02+POWER", "label": "FM02+POWER", "description": "Alzagambe elettrico", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto86.png"}, {"color": "Nero", "dot": "black", "img": "images/foto87.png"}]}], "FM03": [{"code": "FM03", "label": "FM03", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto88.png"}, {"color": "Nero", "dot": "black", "img": "images/foto89.png"}]}], "FM04": [{"code": "FM04", "label": "FM04", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto90.png"}, {"color": "Nero", "dot": "black", "img": "images/foto91.png"}]}], "FM05": [{"code": "FM05", "label": "FM05", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto92.png"}, {"color": "Nero", "dot": "black", "img": "images/foto93.png"}]}], "FM06": [{"code": "FM06", "label": "FM06", "description": "Poltrona lavaggio stile barber", "variants": [{"color": "Cromato", "dot": "gray", "img": "images/foto94.png"}, {"color": "Nero", "dot": "black", "img": "images/foto95.png"}, {"color": "Gold", "dot": "gold", "img": "images/foto96.png"}]}], "FM07": [{"code": "FM07", "label": "FM07", "description": "Poltrona lavaggio — Dimensioni: L 110 cm · P 74 cm · Seduta 45×50 cm · Schienale 47 cm · Vasca 50×57 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto97.png"}]}], "FM08": [{"code": "FM08", "label": "FM08", "description": "Poltrona lavaggio", "variants": [{"color": "Beige", "dot": "beige", "img": "images/foto98.png"}, {"color": "Nero", "dot": "black", "img": "images/foto99.png"}]}], "FM09": [{"code": "FM09", "label": "FM09", "description": "Mobile retrolavaggio con vasca — Dimensioni: L 58 cm · P 48 cm · H 92,5 cm · Vasca 58 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto100.png"}]}], "FM10 Massage": [{"code": "FM10 Massage", "label": "FM10 Massage", "description": "Poltrona lavaggio con funzione massaggio — Dimensioni: L 91,5 cm · P 71 cm · H 71 cm · Seduta 42×50 cm · Schienale 80 cm · Vasca 50×57 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto101.png"}]}], "FM11": [{"code": "FM11", "label": "FM11", "description": "Poltrona lavaggio stile vintage", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto102.png"}]}], "FM08": [{"code": "FM08", "label": "FM08", "description": "Poltrona lavaggio · L 91 cm · H 102 cm · P 70 cm · Seduta 45×50 cm · Vasca 50×57 cm", "variants": [{"color": "Beige", "dot": "beige", "img": "images/foto103.png", "gallery": ["images/foto104.png", "images/foto105.png", "images/foto106.png", "images/foto107.png", "images/foto108.png", "images/foto109.png"]}, {"color": "Nero", "dot": "black", "img": "images/foto110.png", "gallery": ["images/foto111.png", "images/foto112.png", "images/foto113.png", "images/foto114.png", "images/foto115.png", "images/foto116.png"]}]}]};
+// foto1-foto50 → "Images 2/"
+// foto51-foto116 → "images/"
+
+const lavaggio = [
+  {"code": "FM01", "price": "da 850€", "colors": ["white", "black"], "img": "Images 2/foto5.png"},
+  {"code": "FM02", "price": "850–990€", "colors": ["white", "black"], "img": "Images 2/foto6.png"},
+  {"code": "FM03", "price": "850€", "colors": ["white", "black"], "img": "Images 2/foto7.png"},
+  {"code": "FM04", "price": "790€", "colors": ["white", "black"], "img": "Images 2/foto8.png"},
+  {"code": "FM05", "price": "810€", "colors": ["white", "black"], "img": "Images 2/foto9.png"},
+  {"code": "FM06", "price": "980€", "colors": ["gold", "black", "white"], "img": "Images 2/foto10.png"},
+  {"code": "FM07", "price": "790€", "colors": ["black"], "img": "Images 2/foto11.png"},
+  {"code": "FM08", "price": "980€", "colors": ["beige", "black"], "img": "Images 2/foto12.png"},
+  {"code": "FM09", "price": "490€", "colors": ["black"], "img": "Images 2/foto13.png"},
+  {"code": "FM10 Massage", "price": "1.190€", "colors": ["gray"], "img": "Images 2/foto14.png"},
+  {"code": "FM11", "price": "980€", "colors": ["black"], "img": "Images 2/foto15.png"},
+  {"code": "FM12", "price": "820€", "colors": ["black"], "img": "Images 2/foto16.jpg"},
+  {"code": "FM13", "price": "730€", "colors": ["orange", "black", "gray", "gold", "beige"], "img": "Images 2/foto17.jpg"},
+  {"code": "FM14", "price": "730€", "colors": ["black", "orange"], "img": "Images 2/foto18.jpg"},
+  {"code": "FM15", "price": "730€", "colors": ["black", "orange"], "img": "Images 2/foto19.jpg"},
+  {"code": "FM16", "price": "790€", "colors": ["black"], "img": "Images 2/foto20.jpg"},
+  {"code": "FM17", "price": "730€", "colors": ["black", "gray"], "img": "Images 2/foto21.jpg"},
+  {"code": "FM18", "price": "1.450€", "colors": ["black", "brown"], "img": "Images 2/foto22.jpg"},
+  {"code": "FM19", "price": "490€", "colors": ["white"], "img": "Images 2/foto23.jpg"},
+  {"code": "FM20", "price": "740€", "colors": ["white"], "img": "Images 2/foto24.jpg"},
+  {"code": "FM21", "price": "790€", "colors": ["black"], "img": "Images 2/foto25.jpg"},
+  {"code": "FM22", "price": "790€", "colors": ["black"], "img": "Images 2/foto26.jpg"},
+  {"code": "FM23", "price": "820€", "colors": ["white"], "img": "Images 2/foto27.jpg"},
+  {"code": "FM24", "price": "730€", "colors": ["black", "brown"], "img": "Images 2/foto28.jpg"}
+];
+
+const spa = [
+  {"code": "FMSPA1", "price": "1.950€", "colors": ["beige"], "img": "Images 2/foto29.jpg"},
+  {"code": "FMSPA2", "price": "1.950€", "colors": ["black", "gray", "beige"], "img": "Images 2/foto30.jpg"},
+  {"code": "FMSPA3", "price": "790€", "colors": ["black"], "img": "Images 2/foto31.jpg"},
+  {"code": "FMSPA4", "price": "2.050€", "colors": ["white", "black", "brown"], "img": "Images 2/foto32.jpg"},
+  {"code": "FMSPA5", "price": "1.750€", "colors": ["black"], "img": "Images 2/foto33.jpg"},
+  {"code": "FMSPA6", "price": "2.050€", "colors": ["beige"], "img": "Images 2/foto34.jpg"},
+  {"code": "FMSPA7", "price": "2.110€", "colors": ["black"], "img": "Images 2/foto35.jpg"}
+];
+
+const versionsData = {
+  "FM01": [
+    {
+      "code": "FM01", "label": "FM01 — 850€", "price": "850€",
+      "description": "Poltrona lavaggio con lavatesta",
+      "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle interne · Imbottitura extra lombare<br><b>Vasca:</b> Ceramica profonda · Meccanismo basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8\" · Calda 3/8\" · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi",
+      "variants": [
+        {"color": "Bianco", "dot": "white", "img": "Images 2/foto36.png", "gallery": ["Images 2/foto37.png", "Images 2/foto38.png", "Images 2/foto39.png", "Images 2/foto40.png", "Images 2/foto41.png"]},
+        {"color": "Nero", "dot": "black", "img": "Images 2/foto42.png", "gallery": ["Images 2/foto43.png", "Images 2/foto44.png", "Images 2/foto45.png", "Images 2/foto46.png", "Images 2/foto47.png"]}
+      ]
+    },
+    {
+      "code": "FM01+", "label": "FM01+ — 890€", "price": "890€",
+      "description": "Con poggiapiedi ribaltabile manuale",
+      "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle · Imbottitura extra lombare<br><b>Poggiapiedi:</b> Ribaltabile manuale in un unico pezzo<br><b>Vasca:</b> Ceramica profonda · Basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8' · Calda 3/8' · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi<br><b>Alzagambe:</b> Manuale",
+      "variants": [
+        {"color": "Bianco", "dot": "white", "img": "Images 2/foto48.png", "gallery": ["Images 2/foto49.png", "Images 2/foto50.png", "images/foto51.png", "images/foto52.png", "images/foto53.png"]},
+        {"color": "Nero", "dot": "black", "img": "images/foto54.png", "gallery": ["images/foto55.png", "images/foto56.png", "images/foto57.png", "images/foto58.png", "images/foto59.png"]}
+      ]
+    },
+    {
+      "code": "FM01+POWER", "label": "FM01+POWER — 990€", "price": "990€",
+      "description": "Con alzagambe elettrico",
+      "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle · Imbottitura extra lombare<br><b>Poggiapiedi:</b> Elettrico<br><b>Vasca:</b> Ceramica profonda · Basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8' · Calda 3/8' · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi<br><b>Alzagambe:</b> Elettrico",
+      "variants": [
+        {"color": "Bianco", "dot": "white", "img": "images/foto60.png", "gallery": ["images/foto61.png", "images/foto62.png", "images/foto63.png", "images/foto64.png", "images/foto65.png"]},
+        {"color": "Nero", "dot": "black", "img": "images/foto66.png", "gallery": ["images/foto67.png", "images/foto68.png", "images/foto69.png", "images/foto70.png"]}
+      ]
+    },
+    {
+      "code": "FM01+POWER MASSAGE", "label": "FM01+POWER MASSAGE — 1.150€", "price": "1.150€",
+      "description": "Alzagambe elettrico + massaggio ROLL",
+      "specs": "<b>Dimensioni:</b> 96 × 136 × 100 cm<br><b>Peso:</b> 73 kg<br><b>Rivestimento:</b> PVC nero<br><b>Struttura:</b> Interna in metallo<br><b>Seduta:</b> Con molle · Imbottitura extra lombare<br><b>Poggiapiedi:</b> Elettrico reclinabile chaise-longue · Pulsantiera integrata<br><b>Massaggio:</b> Sistema ROLL integrato nello schienale<br><b>Vasca:</b> Ceramica profonda · Basculante · Bianca o Nera<br><b>Rubinetteria:</b> Monocomando cromata · Tubi acciaio inox<br><b>Doccetta:</b> Cromata con tubo in poliammide<br><b>Scarico:</b> Acciaio inox Ø 40mm<br><b>Allacciamenti:</b> Fredda 3/8' · Calda 3/8' · Connessione elettrica<br><b>Schienale:</b> Removibile senza attrezzi<br><b>Alzagambe:</b> Elettrico<br><b>Massaggio:</b> Incluso",
+      "variants": [
+        {"color": "Bianco", "dot": "white", "img": "images/foto71.png", "gallery": ["images/foto72.png", "images/foto73.png", "images/foto74.png", "images/foto75.png", "images/foto76.png"]},
+        {"color": "Nero", "dot": "black", "img": "images/foto77.png", "gallery": ["images/foto78.png", "images/foto79.png", "images/foto80.png", "images/foto81.png"]}
+      ]
+    }
+  ],
+  "FM02": [
+    {"code": "FM02", "label": "FM02", "description": "Poltrona lavaggio base", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto82.png"}, {"color": "Nero", "dot": "black", "img": "images/foto83.png"}]},
+    {"code": "FM02+N", "label": "FM02+N", "description": "Alzagambe manuale", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto84.png"}, {"color": "Nero", "dot": "black", "img": "images/foto85.png"}]},
+    {"code": "FM02+POWER", "label": "FM02+POWER", "description": "Alzagambe elettrico", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto86.png"}, {"color": "Nero", "dot": "black", "img": "images/foto87.png"}]}
+  ],
+  "FM03": [{"code": "FM03", "label": "FM03", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto88.png"}, {"color": "Nero", "dot": "black", "img": "images/foto89.png"}]}],
+  "FM04": [{"code": "FM04", "label": "FM04", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto90.png"}, {"color": "Nero", "dot": "black", "img": "images/foto91.png"}]}],
+  "FM05": [{"code": "FM05", "label": "FM05", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "images/foto92.png"}, {"color": "Nero", "dot": "black", "img": "images/foto93.png"}]}],
+  "FM06": [{"code": "FM06", "label": "FM06", "description": "Poltrona lavaggio stile barber", "variants": [{"color": "Cromato", "dot": "gray", "img": "images/foto94.png"}, {"color": "Nero", "dot": "black", "img": "images/foto95.png"}, {"color": "Gold", "dot": "gold", "img": "images/foto96.png"}]}],
+  "FM07": [{"code": "FM07", "label": "FM07", "description": "Poltrona lavaggio — L 110 cm · P 74 cm · Seduta 45×50 cm · Schienale 47 cm · Vasca 50×57 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto97.png"}]}],
+  "FM08": [{"code": "FM08", "label": "FM08", "description": "Poltrona lavaggio · L 91 cm · H 102 cm · P 70 cm · Seduta 45×50 cm · Vasca 50×57 cm", "variants": [{"color": "Beige", "dot": "beige", "img": "images/foto103.png", "gallery": ["images/foto104.png", "images/foto105.png", "images/foto106.png", "images/foto107.png", "images/foto108.png", "images/foto109.png"]}, {"color": "Nero", "dot": "black", "img": "images/foto110.png", "gallery": ["images/foto111.png", "images/foto112.png", "images/foto113.png", "images/foto114.png", "images/foto115.png", "images/foto116.png"]}]}],
+  "FM09": [{"code": "FM09", "label": "FM09", "description": "Mobile retrolavaggio con vasca — L 58 cm · P 48 cm · H 92,5 cm · Vasca 58 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto100.png"}]}],
+  "FM10 Massage": [{"code": "FM10 Massage", "label": "FM10 Massage", "description": "Poltrona lavaggio con funzione massaggio — L 91,5 cm · P 71 cm · H 71 cm · Seduta 42×50 cm · Schienale 80 cm · Vasca 50×57 cm", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto101.png"}]}],
+  "FM11": [{"code": "FM11", "label": "FM11", "description": "Poltrona lavaggio stile vintage", "variants": [{"color": "Nero", "dot": "black", "img": "images/foto102.png"}]}],
+  "FM12": [{"code": "FM12", "label": "FM12", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto16.jpg"}]}],
+  "FM13": [{"code": "FM13", "label": "FM13", "description": "Poltrona lavaggio", "variants": [{"color": "Arancione", "dot": "orange", "img": "Images 2/foto17.jpg"}, {"color": "Nero", "dot": "black", "img": "Images 2/foto17.jpg"}, {"color": "Grigio", "dot": "gray", "img": "Images 2/foto17.jpg"}, {"color": "Gold", "dot": "gold", "img": "Images 2/foto17.jpg"}, {"color": "Beige", "dot": "beige", "img": "Images 2/foto17.jpg"}]}],
+  "FM14": [{"code": "FM14", "label": "FM14", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto18.jpg"}, {"color": "Arancione", "dot": "orange", "img": "Images 2/foto18.jpg"}]}],
+  "FM15": [{"code": "FM15", "label": "FM15", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto19.jpg"}, {"color": "Arancione", "dot": "orange", "img": "Images 2/foto19.jpg"}]}],
+  "FM16": [{"code": "FM16", "label": "FM16", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto20.jpg"}]}],
+  "FM17": [{"code": "FM17", "label": "FM17", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto21.jpg"}, {"color": "Grigio", "dot": "gray", "img": "Images 2/foto21.jpg"}]}],
+  "FM18": [{"code": "FM18", "label": "FM18", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto22.jpg"}, {"color": "Marrone", "dot": "brown", "img": "Images 2/foto22.jpg"}]}],
+  "FM19": [{"code": "FM19", "label": "FM19", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto23.jpg"}]}],
+  "FM20": [{"code": "FM20", "label": "FM20", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto24.jpg"}]}],
+  "FM21": [{"code": "FM21", "label": "FM21", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto25.jpg"}]}],
+  "FM22": [{"code": "FM22", "label": "FM22", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto26.jpg"}]}],
+  "FM23": [{"code": "FM23", "label": "FM23", "description": "Poltrona lavaggio", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto27.jpg"}]}],
+  "FM24": [{"code": "FM24", "label": "FM24", "description": "Poltrona lavaggio", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto28.jpg"}, {"color": "Marrone", "dot": "brown", "img": "Images 2/foto28.jpg"}]}],
+  "FMSPA1": [{"code": "FMSPA1", "label": "FMSPA1", "description": "Retrolavaggio SPA", "variants": [{"color": "Beige", "dot": "beige", "img": "Images 2/foto29.jpg"}]}],
+  "FMSPA2": [{"code": "FMSPA2", "label": "FMSPA2", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto30.jpg"}, {"color": "Grigio", "dot": "gray", "img": "Images 2/foto30.jpg"}, {"color": "Beige", "dot": "beige", "img": "Images 2/foto30.jpg"}]}],
+  "FMSPA3": [{"code": "FMSPA3", "label": "FMSPA3", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto31.jpg"}]}],
+  "FMSPA4": [{"code": "FMSPA4", "label": "FMSPA4", "description": "Retrolavaggio SPA", "variants": [{"color": "Bianco", "dot": "white", "img": "Images 2/foto32.jpg"}, {"color": "Nero", "dot": "black", "img": "Images 2/foto32.jpg"}, {"color": "Marrone", "dot": "brown", "img": "Images 2/foto32.jpg"}]}],
+  "FMSPA5": [{"code": "FMSPA5", "label": "FMSPA5", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto33.jpg"}]}],
+  "FMSPA6": [{"code": "FMSPA6", "label": "FMSPA6", "description": "Retrolavaggio SPA", "variants": [{"color": "Beige", "dot": "beige", "img": "Images 2/foto34.jpg"}]}],
+  "FMSPA7": [{"code": "FMSPA7", "label": "FMSPA7", "description": "Retrolavaggio SPA", "variants": [{"color": "Nero", "dot": "black", "img": "Images 2/foto35.jpg"}]}]
+};
+
 const colorLabels = {
   black:'Nero', white:'Bianco', gold:'Oro',
   gray:'Grigio', beige:'Beige', orange:'Ruggine', brown:'Marrone'
@@ -149,7 +261,7 @@ function renderProducts(data, containerId) {
   const el = document.getElementById(containerId);
   el.innerHTML = data.map(p => {
     const imgHtml = p.img
-      ? `<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;" alt="${p.code}">`
+      ? `<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;" alt="${p.code}" loading="lazy">`
       : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#b0b0b0"><span style="font-family:'Bebas Neue',sans-serif;font-size:36px;opacity:0.25">${p.code}</span></div>`;
     const colorsHtml = p.colors.map(c => `<div class="color-dot ${c}" title="${colorLabels[c]||c}"></div>`).join('');
     return `
@@ -191,20 +303,17 @@ function renderModal() {
 
   if (versions) {
     const v = versions[currentVersionIndex];
-    let activeVariantIndex = 0;
 
     const vBtns = versions.map((ver, i) =>
       `<button class="ver-btn ${i === currentVersionIndex ? 'active' : ''}" onclick="setVersion(${i})">${ver.label}</button>`
     ).join('');
 
-    // Color selector dots
     const variantsHtml = v.variants.map((vr, vi) => `
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" onclick="selectColorVariant(${vi})">
         <div class="color-dot ${vr.dot}" id="cdot_${vi}" style="width:22px;height:22px;box-shadow:${vi===0?'0 0 0 2px #111':'none'};"></div>
         <span style="font-size:10px;font-weight:600;letter-spacing:1px;">${vr.color}</span>
       </div>`).join('');
 
-    // Main image + gallery for first variant
     const firstVariant = v.variants[0];
     const mainImgHtml = `<img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:12px;cursor:zoom-in;" onclick="openLightbox(this.src)">`;
 
@@ -238,7 +347,6 @@ function renderModal() {
       <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${p.code}!')">✉ Richiedi informazioni</button>
     `;
 
-    // Store variants for color switching
     window._currentVariants = v.variants;
   } else {
     const colorsHtml = p.colors.map(c => `
@@ -250,15 +358,10 @@ function renderModal() {
       <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
       <p class="modal-code">${p.code}</p>
       ${p.img ? `<img src="${p.img}" style="width:100%;aspect-ratio:1;object-fit:cover;margin-bottom:14px;">` : ''}
-      <p class="modal-price">${v.price || p.price}</p>
+      <p class="modal-price">${p.price}</p>
       <div class="modal-divider"></div>
       <p class="modal-section-title">Versioni disponibili</p>
       <div class="modal-colors">${colorsHtml}</div>
-      <div class="modal-divider"></div>
-      <p class="modal-section-title">Scheda Tecnica</p>
-      <div id="specs-box" style="background:rgba(17,17,17,0.05);padding:16px 18px;margin-bottom:18px;font-size:12px;line-height:1.9;letter-spacing:0.3px;">
-        ${v.specs || '<span style="opacity:0.4">Dati tecnici non disponibili</span>'}
-      </div>
       <div class="modal-divider"></div>
       <p class="modal-section-title">Note</p>
       <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
@@ -277,18 +380,12 @@ function selectColorVariant(vi) {
   const variants = window._currentVariants;
   if (!variants || !variants[vi]) return;
   const vr = variants[vi];
-
-  // Update dot highlights
   variants.forEach((_, i) => {
     const dot = document.getElementById('cdot_' + i);
     if(dot) dot.style.boxShadow = i === vi ? '0 0 0 2px #111' : 'none';
   });
-
-  // Update main image
   const mainImg = document.getElementById('main-product-img');
   if(mainImg) mainImg.src = vr.img;
-
-  // Update gallery
   const strip = document.getElementById('gallery-strip');
   if(strip && vr.gallery) {
     strip.innerHTML = vr.gallery.map((g, gi) =>
@@ -302,25 +399,6 @@ function selectColorVariant(vi) {
 function setVersion(i) {
   currentVersionIndex = i;
   renderModal();
-}
-
-function selectVariant(vi) {
-  document.querySelectorAll('[id^="vimg_"]').forEach((el, idx) => {
-    el.classList.toggle('selected', idx === vi);
-  });
-}
-
-function selectVariantFull(vi, variants) {
-  document.querySelectorAll('[id^="vimg_"]').forEach((el, idx) => {
-    el.classList.toggle('selected', idx === vi);
-  });
-  const gWrap = document.getElementById('gallery-wrap');
-  if (gWrap && variants[vi].gallery) {
-    const grid = gWrap.querySelector('div');
-    grid.innerHTML = variants[vi].gallery.map(g =>
-      `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;" onclick="openLightbox('${g}')">`
-    ).join('');
-  }
 }
 
 function openLightbox(src) {
