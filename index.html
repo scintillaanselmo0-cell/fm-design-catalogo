@@ -341,11 +341,12 @@ function renderModal() {
     const firstVariant = v.variants[0];
     const mainImgHtml = `<img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:12px;cursor:zoom-in;" onclick="openLightbox(this.src)">`;
 
-    const galleryHtml = firstVariant.gallery
-      ? `<div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(firstVariant.gallery.length,4)},1fr);gap:6px;margin-bottom:16px;">
-          ${firstVariant.gallery.map((g,gi) => `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid ${gi===0?'#111':'transparent'};transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`).join('')}
+    const galleryPhotos = firstVariant.gallery || [];
+    const galleryHtml = galleryPhotos.length > 0
+      ? `<div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(galleryPhotos.length,4)},1fr);gap:6px;margin-bottom:16px;">
+          ${galleryPhotos.map((g,gi) => `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid transparent;transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`).join('')}
         </div>`
-      : '';
+      : '<div id="gallery-strip"></div>';
 
     body.innerHTML = `
       <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
@@ -404,19 +405,28 @@ function selectColorVariant(vi) {
   const variants = window._currentVariants;
   if (!variants || !variants[vi]) return;
   const vr = variants[vi];
+
+  // Aggiorna bordo pallini
   variants.forEach((_, i) => {
     const dot = document.getElementById('cdot_' + i);
     if(dot) dot.style.boxShadow = i === vi ? '0 0 0 2px #111' : 'none';
   });
+
+  // Aggiorna immagine principale
   const mainImg = document.getElementById('main-product-img');
   if(mainImg) mainImg.src = vr.img;
+
+  // Aggiorna galleria completa con colonne corrette
   const strip = document.getElementById('gallery-strip');
-  if(strip && vr.gallery) {
-    strip.innerHTML = vr.gallery.map((g, gi) =>
-      `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid ${gi===0?'#111':'transparent'};transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`
-    ).join('');
-  } else if(strip) {
-    strip.innerHTML = '';
+  if(strip) {
+    if(vr.gallery && vr.gallery.length > 0) {
+      strip.style.gridTemplateColumns = `repeat(${Math.min(vr.gallery.length, 4)}, 1fr)`;
+      strip.innerHTML = vr.gallery.map((g, gi) =>
+        `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid transparent;transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`
+      ).join('');
+    } else {
+      strip.innerHTML = '';
+    }
   }
 }
 
