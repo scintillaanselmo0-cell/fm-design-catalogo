@@ -135,7 +135,7 @@
 </footer>
 
 <script>
-// ─── DATA ───
+// ─── DATA v3 ───
 // foto1-foto50 → "Images 2/"
 // foto51-foto116 → "images/"
 
@@ -335,11 +335,10 @@ function renderModal() {
     const firstVariant = v.variants[0];
     const mainImgHtml = `<img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:12px;cursor:zoom-in;" onclick="openLightbox(this.src)">`;
 
-    // Se ci sono più varianti colore, mostra le foto principali di ogni colore come galleria
+    // Se ci sono più varianti colore, mostra le foto principali di ogni variante
     // Se c'è una sola variante, mostra la galleria normale
     let galleryHtml = '';
     if (v.variants.length > 1) {
-      // Galleria colori: foto principale di ogni variante
       galleryHtml = `
         <p class="modal-section-title" style="margin-bottom:8px;">Varianti colore — clicca per vedere</p>
         <div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(v.variants.length,4)},1fr);gap:6px;margin-bottom:16px;">
@@ -350,7 +349,6 @@ function renderModal() {
             </div>`).join('')}
         </div>`;
     } else if (firstVariant.gallery && firstVariant.gallery.length > 0) {
-      // Galleria foto normale
       galleryHtml = `
         <div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(firstVariant.gallery.length,4)},1fr);gap:6px;margin-bottom:16px;">
           ${firstVariant.gallery.map((g,gi) => `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid transparent;transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`).join('')}
