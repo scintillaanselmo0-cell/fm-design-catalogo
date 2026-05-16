@@ -409,19 +409,46 @@ function selectColorVariantThumb(vi) {
   if (!variants || !variants[vi]) return;
   const vr = variants[vi];
 
-  // Aggiorna bordo thumbnail
-  variants.forEach((_, i) => {
-    const thumb = document.getElementById('gthumb_' + i);
-    if(thumb) thumb.style.borderColor = i === vi ? '#111' : 'transparent';
-  });
-
   // Aggiorna immagine principale
   const mainImg = document.getElementById('main-product-img');
   if(mainImg) mainImg.src = vr.img;
+
+  // Sostituisce la galleria con le foto di questa variante
+  const strip = document.getElementById('gallery-strip');
+  if(strip) {
+    const allPhotos = vr.gallery && vr.gallery.length > 0 ? vr.gallery : [];
+    strip.style.gridTemplateColumns = `repeat(${Math.min(allPhotos.length + 1, 4)}, 1fr)`;
+    // Prima foto = principale (già selezionata), poi le gallery
+    const allImgs = [vr.img, ...allPhotos];
+    strip.innerHTML = allImgs.map((g, gi) => `
+      <img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid ${gi===0?'#111':'transparent'};transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_v${gi}">
+    `).join('');
+
+    // Aggiungi bottone "torna alle varianti"
+    strip.insertAdjacentHTML('beforebegin', `
+      <p id="back-to-variants" style="font-size:10px;letter-spacing:2px;opacity:0.5;cursor:pointer;margin-bottom:6px;" onclick="resetToVariants()">← Torna alle varianti</p>
+    `);
+  }
 }
 
-function selectColorVariant(vi) {
-  selectColorVariantThumb(vi);
+function resetToVariants() {
+  const variants = window._currentVariants;
+  if(!variants) return;
+
+  // Rimuove il bottone back
+  const backBtn = document.getElementById('back-to-variants');
+  if(backBtn) backBtn.remove();
+
+  // Ripristina la galleria varianti
+  const strip = document.getElementById('gallery-strip');
+  if(strip) {
+    strip.style.gridTemplateColumns = `repeat(${Math.min(variants.length, 4)}, 1fr)`;
+    strip.innerHTML = variants.map((vr, vi) => `
+      <div style="cursor:pointer;" onclick="selectColorVariantThumb(${vi})">
+        <img src="${vr.img}" id="gthumb_${vi}" style="width:100%;aspect-ratio:1;object-fit:cover;border:2px solid ${vi===0?'#111':'transparent'};transition:border-color .2s;">
+        <p style="font-size:9px;text-align:center;margin-top:4px;opacity:0.6;line-height:1.3;">${vr.color}</p>
+      </div>`).join('');
+  }
 }
 
 function setVersion(i) {
