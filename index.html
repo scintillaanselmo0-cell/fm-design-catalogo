@@ -332,21 +332,30 @@ function renderModal() {
       `<button class="ver-btn ${i === currentVersionIndex ? 'active' : ''}" onclick="setVersion(${i})">${ver.label}</button>`
     ).join('');
 
-    const variantsHtml = v.variants.map((vr, vi) => `
-      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;" onclick="selectColorVariant(${vi})">
-        <div class="color-dot ${vr.dot}" id="cdot_${vi}" style="width:22px;height:22px;box-shadow:${vi===0?'0 0 0 2px #111':'none'};"></div>
-        <span style="font-size:10px;font-weight:600;letter-spacing:1px;">${vr.color}</span>
-      </div>`).join('');
-
     const firstVariant = v.variants[0];
     const mainImgHtml = `<img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:12px;cursor:zoom-in;" onclick="openLightbox(this.src)">`;
 
-    const galleryPhotos = firstVariant.gallery || [];
-    const galleryHtml = galleryPhotos.length > 0
-      ? `<div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(galleryPhotos.length,4)},1fr);gap:6px;margin-bottom:16px;">
-          ${galleryPhotos.map((g,gi) => `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid transparent;transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`).join('')}
-        </div>`
-      : '<div id="gallery-strip"></div>';
+    // Se ci sono più varianti colore, mostra le foto principali di ogni colore come galleria
+    // Se c'è una sola variante, mostra la galleria normale
+    let galleryHtml = '';
+    if (v.variants.length > 1) {
+      // Galleria colori: foto principale di ogni variante
+      galleryHtml = `
+        <p class="modal-section-title" style="margin-bottom:8px;">Varianti colore — clicca per vedere</p>
+        <div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(v.variants.length,4)},1fr);gap:6px;margin-bottom:16px;">
+          ${v.variants.map((vr, vi) => `
+            <div style="cursor:pointer;" onclick="selectColorVariantThumb(${vi})">
+              <img src="${vr.img}" id="gthumb_${vi}" style="width:100%;aspect-ratio:1;object-fit:cover;border:2px solid ${vi===0?'#111':'transparent'};transition:border-color .2s;">
+              <p style="font-size:9px;text-align:center;margin-top:4px;opacity:0.6;line-height:1.3;">${vr.color}</p>
+            </div>`).join('')}
+        </div>`;
+    } else if (firstVariant.gallery && firstVariant.gallery.length > 0) {
+      // Galleria foto normale
+      galleryHtml = `
+        <div id="gallery-strip" style="display:grid;grid-template-columns:repeat(${Math.min(firstVariant.gallery.length,4)},1fr);gap:6px;margin-bottom:16px;">
+          ${firstVariant.gallery.map((g,gi) => `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid transparent;transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`).join('')}
+        </div>`;
+    }
 
     body.innerHTML = `
       <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
@@ -355,10 +364,6 @@ function renderModal() {
       <div class="modal-divider"></div>
       ${vBtns ? `<p class="modal-section-title">Versioni</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">${vBtns}</div>` : ''}
       <p style="font-size:12px;opacity:.6;margin-bottom:14px;">${v.description}</p>
-      <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;">
-        <p class="modal-section-title" style="margin:0">Colore:</p>
-        <div style="display:flex;gap:14px;">${variantsHtml}</div>
-      </div>
       ${mainImgHtml}
       ${galleryHtml}
       <div class="modal-divider"></div>
@@ -401,33 +406,24 @@ function setMainImg(src, thumbEl) {
   if(thumbEl) thumbEl.style.borderColor = '#111';
 }
 
-function selectColorVariant(vi) {
+function selectColorVariantThumb(vi) {
   const variants = window._currentVariants;
   if (!variants || !variants[vi]) return;
   const vr = variants[vi];
 
-  // Aggiorna bordo pallini
+  // Aggiorna bordo thumbnail
   variants.forEach((_, i) => {
-    const dot = document.getElementById('cdot_' + i);
-    if(dot) dot.style.boxShadow = i === vi ? '0 0 0 2px #111' : 'none';
+    const thumb = document.getElementById('gthumb_' + i);
+    if(thumb) thumb.style.borderColor = i === vi ? '#111' : 'transparent';
   });
 
   // Aggiorna immagine principale
   const mainImg = document.getElementById('main-product-img');
   if(mainImg) mainImg.src = vr.img;
+}
 
-  // Aggiorna galleria completa con colonne corrette
-  const strip = document.getElementById('gallery-strip');
-  if(strip) {
-    if(vr.gallery && vr.gallery.length > 0) {
-      strip.style.gridTemplateColumns = `repeat(${Math.min(vr.gallery.length, 4)}, 1fr)`;
-      strip.innerHTML = vr.gallery.map((g, gi) =>
-        `<img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid transparent;transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_${gi}">`
-      ).join('');
-    } else {
-      strip.innerHTML = '';
-    }
-  }
+function selectColorVariant(vi) {
+  selectColorVariantThumb(vi);
 }
 
 function setVersion(i) {
