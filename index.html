@@ -333,7 +333,12 @@ function renderModal() {
     ).join('');
 
     const firstVariant = v.variants[0];
-    const mainImgHtml = `<img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:12px;cursor:zoom-in;" onclick="openLightbox(this.src)">`;
+    const mainImgHtml = `
+      <div style="position:relative;margin-bottom:12px;">
+        <img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in;" onclick="openLightbox(this.src)">
+        <button onclick="prevPhoto()" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;border-radius:50%;">‹</button>
+        <button onclick="nextPhoto()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;border-radius:50%;">›</button>
+      </div>`;
 
     // Se ci sono più varianti colore, mostra le foto principali di ogni variante
     // Se c'è una sola variante, mostra la galleria normale
@@ -376,6 +381,9 @@ function renderModal() {
     `;
 
     window._currentVariants = v.variants;
+    // Inizializza foto con prima variante
+    currentPhotos = [firstVariant.img, ...(firstVariant.gallery || [])];
+    currentPhotoIndex = 0;
   } else {
     const colorsHtml = p.colors.map(c => `
       <div class="modal-color-tag">
@@ -404,51 +412,45 @@ function setMainImg(src, thumbEl) {
   if(thumbEl) thumbEl.style.borderColor = '#111';
 }
 
+let currentPhotos = [];
+let currentPhotoIndex = 0;
+
 function selectColorVariantThumb(vi) {
   const variants = window._currentVariants;
   if (!variants || !variants[vi]) return;
   const vr = variants[vi];
 
+  // Aggiorna bordo thumbnail varianti
+  variants.forEach((_, i) => {
+    const thumb = document.getElementById('gthumb_' + i);
+    if(thumb) thumb.style.borderColor = i === vi ? '#111' : 'transparent';
+  });
+
+  // Imposta le foto di questa variante
+  currentPhotos = [vr.img, ...(vr.gallery || [])];
+  currentPhotoIndex = 0;
+
   // Aggiorna immagine principale
   const mainImg = document.getElementById('main-product-img');
-  if(mainImg) mainImg.src = vr.img;
-
-  // Sostituisce la galleria con le foto di questa variante
-  const strip = document.getElementById('gallery-strip');
-  if(strip) {
-    const allPhotos = vr.gallery && vr.gallery.length > 0 ? vr.gallery : [];
-    strip.style.gridTemplateColumns = `repeat(${Math.min(allPhotos.length + 1, 4)}, 1fr)`;
-    // Prima foto = principale (già selezionata), poi le gallery
-    const allImgs = [vr.img, ...allPhotos];
-    strip.innerHTML = allImgs.map((g, gi) => `
-      <img src="${g}" style="width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;border:2px solid ${gi===0?'#111':'transparent'};transition:border-color .2s;" onclick="setMainImg('${g}',this)" id="gthumb_v${gi}">
-    `).join('');
-
-    // Aggiungi bottone "torna alle varianti"
-    strip.insertAdjacentHTML('beforebegin', `
-      <p id="back-to-variants" style="font-size:10px;letter-spacing:2px;opacity:0.5;cursor:pointer;margin-bottom:6px;" onclick="resetToVariants()">← Torna alle varianti</p>
-    `);
-  }
+  if(mainImg) mainImg.src = currentPhotos[0];
 }
 
-function resetToVariants() {
-  const variants = window._currentVariants;
-  if(!variants) return;
+function prevPhoto() {
+  if(currentPhotos.length === 0) return;
+  currentPhotoIndex = (currentPhotoIndex - 1 + currentPhotos.length) % currentPhotos.length;
+  const mainImg = document.getElementById('main-product-img');
+  if(mainImg) mainImg.src = currentPhotos[currentPhotoIndex];
+}
 
-  // Rimuove il bottone back
-  const backBtn = document.getElementById('back-to-variants');
-  if(backBtn) backBtn.remove();
+function nextPhoto() {
+  if(currentPhotos.length === 0) return;
+  currentPhotoIndex = (currentPhotoIndex + 1) % currentPhotos.length;
+  const mainImg = document.getElementById('main-product-img');
+  if(mainImg) mainImg.src = currentPhotos[currentPhotoIndex];
+}
 
-  // Ripristina la galleria varianti
-  const strip = document.getElementById('gallery-strip');
-  if(strip) {
-    strip.style.gridTemplateColumns = `repeat(${Math.min(variants.length, 4)}, 1fr)`;
-    strip.innerHTML = variants.map((vr, vi) => `
-      <div style="cursor:pointer;" onclick="selectColorVariantThumb(${vi})">
-        <img src="${vr.img}" id="gthumb_${vi}" style="width:100%;aspect-ratio:1;object-fit:cover;border:2px solid ${vi===0?'#111':'transparent'};transition:border-color .2s;">
-        <p style="font-size:9px;text-align:center;margin-top:4px;opacity:0.6;line-height:1.3;">${vr.color}</p>
-      </div>`).join('');
-  }
+function selectColorVariant(vi) {
+  selectColorVariantThumb(vi);
 }
 
 function setVersion(i) {
