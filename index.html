@@ -110,6 +110,26 @@
   </div>
 </div>
 
+<!-- CART -->
+<button class="cart-fab" id="cartFab" onclick="openCart()" aria-label="Preventivo">
+  <span class="cart-ico">🛒</span><span class="cart-count" id="cartCount">0</span>
+</button>
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()">
+  <div class="cart-panel">
+    <div class="cart-head">
+      <div><p class="section-label" style="opacity:.5">Il tuo</p><h3>PREVENTIVO</h3></div>
+      <button class="cart-x" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot" id="cartFoot">
+      <div class="cart-total"><span>Totale indicativo</span><span id="cartTotal">€ 0</span></div>
+      <p class="cart-note">Prezzi IVA esclusa. Il totale è indicativo: disponibilità e prezzo finale vengono confermati su WhatsApp.</p>
+      <button class="cart-wa" onclick="checkoutWhatsApp()">Invia preventivo su WhatsApp</button>
+      <button class="cart-pdf" onclick="scaricaPreventivo()">Scarica / stampa preventivo</button>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -400,18 +420,20 @@ function renderLavoro() {
 function openLavoroVer(elm) {
   const v = lavoroIndex[elm.getAttribute('data-ver')];
   if (!v) return;
+  window._modalItem = {code: v.code, price: v.price};
   const body = document.getElementById('modal-body');
   body.innerHTML = `
     <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
     <p class="modal-code">${v.code}</p>
     <p class="modal-price">${v.price||''}</p>
     <div class="modal-divider"></div>
-    <img src="${v.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:16px;cursor:zoom-in;" onclick="openLightbox(this.src)">
+    <img src="${v.img}" style="width:100%;max-height:62vh;object-fit:contain;background:#cfcfcf;margin-bottom:16px;cursor:zoom-in;" onclick="openLightbox(this.src)">
     ${v.specs ? `<div class="modal-divider"></div><p class="modal-section-title">Scheda Tecnica</p>
       <div style="background:rgba(17,17,17,0.05);padding:16px 18px;margin-bottom:18px;font-size:12px;line-height:1.9;letter-spacing:0.3px;">${v.specs}</div>` : ''}
     <div class="modal-divider"></div>
     <p class="modal-section-title">Note</p>
     <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
+    <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
     <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${v.code}!')">✉ Richiedi informazioni</button>
   `;
   document.getElementById('modal').classList.add('open');
@@ -452,6 +474,7 @@ function renderModal() {
 
   if (versions) {
     const v = versions[currentVersionIndex];
+    window._modalItem = {code: (v.code || p.code), price: (v.price || p.price)};
 
     const vBtns = versions.map((ver, i) =>
       `<button class="ver-btn ${i === currentVersionIndex ? 'active' : ''}" onclick="setVersion(${i})">${ver.label}</button>`
@@ -460,7 +483,7 @@ function renderModal() {
     const firstVariant = v.variants[0];
     const mainImgHtml = `
       <div style="position:relative;margin-bottom:12px;">
-        <img id="main-product-img" src="${firstVariant.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in;" onclick="openLightbox(this.src)">
+        <img id="main-product-img" src="${firstVariant.img}" style="width:100%;max-height:60vh;aspect-ratio:4/3;object-fit:contain;background:#cfcfcf;cursor:zoom-in;" onclick="openLightbox(this.src)">
         <button onclick="prevPhoto()" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;border-radius:50%;">‹</button>
         <button onclick="nextPhoto()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;border-radius:50%;">›</button>
       </div>`;
@@ -502,6 +525,7 @@ function renderModal() {
       <div class="modal-divider"></div>
       <p class="modal-section-title">Note</p>
       <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
+      <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
       <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${p.code}!')">✉ Richiedi informazioni</button>
     `;
 
@@ -510,6 +534,7 @@ function renderModal() {
     currentPhotos = [firstVariant.img, ...(firstVariant.gallery || [])];
     currentPhotoIndex = 0;
   } else {
+    window._modalItem = {code: p.code, price: p.price};
     const colorsHtml = p.colors.map(c => `
       <div class="modal-color-tag">
         <div class="color-dot ${c}" style="width:14px;height:14px"></div>
@@ -526,6 +551,7 @@ function renderModal() {
       <div class="modal-divider"></div>
       <p class="modal-section-title">Note</p>
       <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
+      <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
       <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${p.code}!')">✉ Richiedi informazioni</button>
     `;
   }
@@ -616,6 +642,99 @@ function showHome() {
   document.getElementById('lavoro').style.display = 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
+
+// ─── CARRELLO / PREVENTIVO ───
+const WA_NUMBER = '393343672735';
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('fm_cart')||'[]'); } catch(e){ cart = []; }
+
+function parsePrice(label){
+  if(!label) return null;
+  var s = String(label).toLowerCase();
+  if(s.indexOf('richiesta')>-1) return null;
+  var m = s.replace(/\./g,'').match(/\d+/);
+  return m ? parseInt(m[0],10) : null;
+}
+function addToCart(code, priceLabel){
+  var ex = cart.find(function(i){return i.code===code;});
+  if(ex){ ex.qty++; } else { cart.push({code:code, priceLabel:priceLabel||'', priceNum:parsePrice(priceLabel), qty:1}); }
+  saveCart(); renderCart(); bumpFab();
+}
+function addCurrentToCart(){ if(window._modalItem){ addToCart(window._modalItem.code, window._modalItem.price); var f=document.getElementById('cartFab'); if(f) f.classList.add('bump'); } }
+function changeQty(code, d){
+  var it = cart.find(function(i){return i.code===code;});
+  if(!it) return;
+  it.qty += d; if(it.qty<=0){ cart = cart.filter(function(i){return i.code!==code;}); }
+  saveCart(); renderCart();
+}
+function removeItem(code){ cart = cart.filter(function(i){return i.code!==code;}); saveCart(); renderCart(); }
+function saveCart(){ try{ localStorage.setItem('fm_cart', JSON.stringify(cart)); }catch(e){} }
+function cartTotal(){ return cart.reduce(function(s,i){ return s + (i.priceNum? i.priceNum*i.qty : 0); },0); }
+function cartQtyTotal(){ return cart.reduce(function(s,i){return s+i.qty;},0); }
+
+function renderCart(){
+  var n = cartQtyTotal();
+  document.getElementById('cartCount').textContent = n;
+  document.getElementById('cartFab').style.display = n>0 ? 'flex' : 'none';
+  var box = document.getElementById('cartItems');
+  var foot = document.getElementById('cartFoot');
+  if(cart.length===0){
+    box.innerHTML = '<p class="cart-empty">Il preventivo è vuoto.<br>Aggiungi prodotti dal catalogo.</p>';
+    foot.style.display = 'none';
+    return;
+  }
+  foot.style.display = 'block';
+  box.innerHTML = cart.map(function(i){
+    var c = i.code.replace(/'/g,"\\'");
+    return '<div class="cart-row">'+
+      '<div class="cart-row-info"><p class="cart-row-code">'+i.code+'</p><p class="cart-row-price">'+(i.priceLabel||'Prezzo su richiesta')+'</p></div>'+
+      '<div class="cart-qty"><button onclick="changeQty(\''+c+'\',-1)">−</button><span>'+i.qty+'</span><button onclick="changeQty(\''+c+'\',1)">+</button></div>'+
+      '<button class="cart-del" onclick="removeItem(\''+c+'\')">✕</button>'+
+    '</div>';
+  }).join('');
+  var t = cartTotal();
+  var hasRich = cart.some(function(i){return i.priceNum===null;});
+  document.getElementById('cartTotal').textContent = '€ '+t.toLocaleString('it-IT') + (hasRich? ' +' : '');
+}
+function openCart(){ renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart(){ document.getElementById('cartOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function bumpFab(){ var f=document.getElementById('cartFab'); if(!f) return; f.classList.remove('bump'); void f.offsetWidth; f.classList.add('bump'); }
+
+function quoteRef(){ var d=new Date(); function p(x){return (''+x).padStart(2,'0');} return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes()); }
+function checkoutWhatsApp(){
+  if(cart.length===0) return;
+  var ref = quoteRef(), t = cartTotal();
+  var hasRich = cart.some(function(i){return i.priceNum===null;});
+  var lines = cart.map(function(i){ return '• '+i.qty+'x '+i.code+' — '+(i.priceLabel||'prezzo su richiesta'); });
+  var msg = 'Ciao FM Design! Vorrei richiedere un preventivo.%0A%0A';
+  msg += '*Preventivo Rif. '+ref+'*%0A';
+  msg += lines.join('%0A');
+  msg += '%0A%0ATotale indicativo: € '+t.toLocaleString('it-IT')+(hasRich?' + (alcuni articoli su richiesta)':'')+' (IVA esclusa)';
+  msg += '%0A%0AResto in attesa di conferma su disponibilità, prezzo finale e modalità di pagamento. Grazie!';
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+}
+function scaricaPreventivo(){
+  if(cart.length===0) return;
+  var ref = quoteRef(), d = new Date().toLocaleDateString('it-IT');
+  var rows = cart.map(function(i){ return '<tr><td>'+i.code+'</td><td style="text-align:center">'+i.qty+'</td><td style="text-align:right">'+(i.priceLabel||'su richiesta')+'</td></tr>'; }).join('');
+  var t = cartTotal();
+  var hasRich = cart.some(function(i){return i.priceNum===null;});
+  var html = '<html><head><meta charset="utf-8"><title>Preventivo '+ref+'</title>'+
+    '<style>body{font-family:Arial,Helvetica,sans-serif;color:#111;padding:40px;max-width:720px;margin:auto}h1{font-size:22px;letter-spacing:2px;margin:0}table{width:100%;border-collapse:collapse;margin-top:24px}th,td{padding:10px 8px;border-bottom:1px solid #ddd;font-size:14px}th{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#666}.tot{margin-top:18px;text-align:right;font-size:16px;font-weight:bold}.muted{color:#777;font-size:12px;margin-top:6px}.hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #111;padding-bottom:14px}</style>'+
+    '</head><body>'+
+    '<div class="hd"><div><h1>FM DESIGN</h1><div class="muted">Forniture professionali per parrucchieri</div></div>'+
+    '<div style="text-align:right"><div><b>PREVENTIVO</b></div><div class="muted">Rif. '+ref+'<br>'+d+'</div></div></div>'+
+    '<table><thead><tr><th style="text-align:left">Articolo</th><th style="text-align:center">Q.tà</th><th style="text-align:right">Prezzo</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<div class="tot">Totale indicativo: € '+t.toLocaleString('it-IT')+(hasRich?' +':'')+'</div>'+
+    '<p class="muted">Prezzi IVA esclusa. Preventivo indicativo e non vincolante'+(hasRich?'; alcuni articoli a prezzo su richiesta':'')+'. Disponibilità e totale finale da confermare.</p>'+
+    '<p class="muted">Inviare questo preventivo su WhatsApp al 334 367 2735 per concordare pagamento e maggiori informazioni.</p>'+
+    '</body></html>';
+  var w = window.open('', '_blank');
+  if(!w){ alert('Consenti i popup per scaricare il preventivo.'); return; }
+  w.document.write(html); w.document.close();
+  setTimeout(function(){ w.focus(); w.print(); }, 350);
+}
+renderCart();
 </script>
 </body>
 </html>
