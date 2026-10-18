@@ -17,7 +17,7 @@
   </a>
   <nav>
     <a href="#" onclick="showSection('lavaggio')">Lavaggio</a>
-    <a href="#" onclick="alert('Sezione in arrivo!')">Poltrone Lavoro</a>
+    <a href="#" onclick="showSection('lavoro')">Poltrone Lavoro</a>
     <a href="#" onclick="alert('Sezione in arrivo!')">Barber</a>
     <a href="#" onclick="alert('Sezione in arrivo!')">Complementi</a>
     <a href="#" class="nav-cta">Contatti</a>
@@ -48,8 +48,8 @@
       <div class="cat-info"><p class="cat-num">01</p><p class="cat-name">Poltrone Lavaggio</p></div>
       <span class="cat-arrow">→</span>
     </div>
-    <div class="cat-card" onclick="alert('Sezione in arrivo!')">
-      <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80" alt="Poltrone Lavoro" onerror="this.style.display='none'">
+    <div class="cat-card" onclick="showSection('lavoro')">
+      <img src="images-lavoro/pl_FMP1A.png" alt="Poltrone Lavoro" onerror="this.style.display='none'">
       <div class="cat-info"><p class="cat-num">02</p><p class="cat-name">Poltrone Lavoro</p></div>
       <span class="cat-arrow">→</span>
     </div>
@@ -87,6 +87,19 @@
     <p class="section-count">13 modelli</p>
   </div>
   <div class="product-groups" id="products-lavaggio"></div>
+</section>
+
+<!-- POLTRONE LAVORO SECTION -->
+<section class="section" id="lavoro" style="display:none">
+  <button class="back-btn" onclick="showHome()">← Torna al catalogo</button>
+  <div class="section-head">
+    <div>
+      <p class="section-label">Categoria 02</p>
+      <h2>POLTRONE<br>LAVORO</h2>
+    </div>
+    <p class="section-count" id="count-lavoro"></p>
+  </div>
+  <div class="product-groups" id="products-lavoro"></div>
 </section>
 
 <!-- MODAL -->
@@ -327,6 +340,86 @@ function renderGroupedProducts(models, containerId) {
 
 renderGroupedProducts(lavaggio, 'products-lavaggio');
 
+// ─── POLTRONE LAVORO ───
+// NB: sezione in costruzione — modelli caricati finora (gli altri in arrivo)
+const lavoro = [
+  {code:'FMP1', versions:[
+    {code:'FMP1A', price:'350€', img:'images-lavoro/pl_FMP1A.png'},
+    {code:'FMP1B', price:'340€', img:'images-lavoro/pl_FMP1B.png'},
+    {code:'FMP1C', price:'340€', img:'images-lavoro/pl_FMP1C.png'},
+    {code:'FMP1D', price:'350€', img:'images-lavoro/pl_FMP1D.png'},
+    {code:'FMP1E', price:'360€', img:'images-lavoro/pl_FMP1E.png'}
+  ]},
+  {code:'FMP2', versions:[
+    {code:'FMP2A', price:'340€', img:'images-lavoro/pl_FMP2A.png'},
+    {code:'FMP2B', price:'360€', img:'images-lavoro/pl_FMP2B.png'}
+  ]},
+  {code:'FMP3', single:true, versions:[
+    {code:'FMP3', price:'340€', img:'images-lavoro/pl_FMP3.png',
+     specs:"<b>Descrizione:</b> Sedia da taglio con schiuma iniettata di poliuretano ad alta densità e struttura interna in metallo. Base rotonda sottile rifinita in metallo cromato. Pompa idraulica bloccabile con freno. Rivestimento nero.<br><b>Comfort:</b> Schiuma iniettata di poliuretano + struttura interna in metallo<br><b>Qualità:</b> Base in metallo cromato sottile<br><b>Facile da pulire:</b> Monoblocco senza giunture<br><b>Dimensioni:</b> 60×61×45/57 cm<br><b>Peso:</b> 17 kg<br><b>Rivestimento:</b> PVC"}
+  ]}
+];
+
+// Indice piatto versione→oggetto per il modale
+const lavoroIndex = {};
+lavoro.forEach(m => m.versions.forEach(v => { lavoroIndex[v.code] = Object.assign({model:m.code}, v); }));
+
+function renderLavoro() {
+  const el = document.getElementById('products-lavoro');
+  if (!el) return;
+  el.innerHTML = lavoro.map(model => {
+    const cards = model.versions.map(v => {
+      const imgHtml = v.img
+        ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.code}" loading="lazy" onerror="this.style.display='none'">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#b0b0b0"><span style="font-family:'Bebas Neue',sans-serif;font-size:36px;opacity:0.25">${v.code}</span></div>`;
+      return `
+        <div class="product-card" data-ver="${v.code}" onclick="openLavoroVer(this)">
+          <div class="product-img-wrap">
+            ${imgHtml}
+            <div class="product-overlay"><span class="product-cta">Vedi scheda</span></div>
+          </div>
+          <div class="product-info">
+            <p class="product-code">${v.code}</p>
+            <div class="product-bottom">
+              <p class="product-price">${v.price||''}</p>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+    return `
+      <div class="model-group">
+        <h3 class="model-group-title">${model.code}</h3>
+        <div class="products-grid">${cards}</div>
+      </div>`;
+  }).join('');
+  const nmod = lavoro.length;
+  const cnt = document.getElementById('count-lavoro');
+  if (cnt) cnt.textContent = nmod + ' modelli';
+}
+
+function openLavoroVer(elm) {
+  const v = lavoroIndex[elm.getAttribute('data-ver')];
+  if (!v) return;
+  const body = document.getElementById('modal-body');
+  body.innerHTML = `
+    <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
+    <p class="modal-code">${v.code}</p>
+    <p class="modal-price">${v.price||''}</p>
+    <div class="modal-divider"></div>
+    <img src="${v.img}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:16px;cursor:zoom-in;" onclick="openLightbox(this.src)">
+    ${v.specs ? `<div class="modal-divider"></div><p class="modal-section-title">Scheda Tecnica</p>
+      <div style="background:rgba(17,17,17,0.05);padding:16px 18px;margin-bottom:18px;font-size:12px;line-height:1.9;letter-spacing:0.3px;">${v.specs}</div>` : ''}
+    <div class="modal-divider"></div>
+    <p class="modal-section-title">Note</p>
+    <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
+    <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${v.code}!')">✉ Richiedi informazioni</button>
+  `;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+renderLavoro();
+
 // ─── MODAL ───
 let currentVersionIndex = 0;
 let currentProduct = null;
@@ -512,6 +605,7 @@ function showSection(id) {
   document.getElementById('hero').style.display = 'none';
   document.getElementById('categories').style.display = 'none';
   document.getElementById('lavaggio').style.display = id === 'lavaggio' ? 'block' : 'none';
+  document.getElementById('lavoro').style.display = id === 'lavoro' ? 'block' : 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -519,6 +613,7 @@ function showHome() {
   document.getElementById('hero').style.display = 'flex';
   document.getElementById('categories').style.display = 'block';
   document.getElementById('lavaggio').style.display = 'none';
+  document.getElementById('lavoro').style.display = 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 </script>
