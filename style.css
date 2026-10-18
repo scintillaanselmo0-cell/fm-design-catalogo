@@ -73,7 +73,7 @@
     font-family:'Bebas Neue',sans-serif;
     font-size:clamp(52px,7vw,112px);
     line-height:.82; letter-spacing:-1px;
-    color:rgba(17,17,17,.12);
+    color:rgba(17,17,17,.34);
     margin:0 0 -16px -2px;            /* le card salgono sopra il titolo -> effetto sovraimpressione */
     position:relative; z-index:0;
     user-select:none; pointer-events:none; white-space:nowrap;
