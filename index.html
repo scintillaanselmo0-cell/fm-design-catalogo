@@ -124,11 +124,28 @@
     <div class="cart-foot" id="cartFoot">
       <div class="cart-total"><span>Totale indicativo</span><span id="cartTotal">€ 0</span></div>
       <p class="cart-note">Prezzi IVA esclusa. Il totale è indicativo: disponibilità e prezzo finale vengono confermati su WhatsApp.</p>
-      <button class="cart-wa" onclick="checkoutWhatsApp()">Invia preventivo su WhatsApp</button>
-      <button class="cart-pdf" onclick="scaricaPreventivo()">Scarica / stampa preventivo</button>
+      <button class="cart-wa" onclick="generaPreventivo()">Genera preventivo</button>
     </div>
   </div>
 </div>
+
+<!-- PREVENTIVO (immagine) -->
+<div class="quote-overlay" id="quoteOverlay" onclick="if(event.target===this)closeQuote()">
+  <div class="quote-box">
+    <button class="quote-x" onclick="closeQuote()">✕</button>
+    <p class="quote-hint">📸 <b>Salva il preventivo</b>: su telefono <b>tieni premuto sull'immagine</b> per salvarla nelle foto, oppure fai uno <b>screenshot</b>. Poi aprilo su WhatsApp e invialo in chat.</p>
+    <div class="quote-img-wrap"><img id="quoteImg" class="quote-img" alt="Preventivo FM Design"></div>
+    <div class="quote-actions">
+      <button class="cart-pdf" onclick="salvaPreventivoImg()">⬇ Salva immagine</button>
+      <button class="cart-wa" onclick="apriWhatsApp()">Apri WhatsApp per inviarlo</button>
+    </div>
+  </div>
+</div>
+
+<!-- BADGE WHATSAPP -->
+<a class="wa-badge" href="https://wa.me/393343672735" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp" title="Scrivici su WhatsApp">
+  <svg viewBox="0 0 32 32" width="30" height="30" fill="currentColor"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.7 1.4 5.8 1.4h.01C24.6 28.8 30 23.4 30 16.8 30 9.9 23.6 3 16 3zm0 23.3c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-4.8 1 1-4.7-.3-.5c-1-1.6-1.5-3.4-1.5-5.3C4.9 9.9 9.9 5 16 5c2.9 0 5.7 1.1 7.8 3.2 2.1 2.1 3.2 4.8 3.2 7.7 0 6-5 10.4-11 10.4zm5.8-7.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.8.7.7.2 1.4.2 1.9.1.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
 
 <!-- FOOTER -->
 <footer>
@@ -701,39 +718,68 @@ function closeCart(){ document.getElementById('cartOverlay').classList.remove('o
 function bumpFab(){ var f=document.getElementById('cartFab'); if(!f) return; f.classList.remove('bump'); void f.offsetWidth; f.classList.add('bump'); }
 
 function quoteRef(){ var d=new Date(); function p(x){return (''+x).padStart(2,'0');} return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes()); }
-function checkoutWhatsApp(){
-  if(cart.length===0) return;
-  var ref = quoteRef(), t = cartTotal();
-  var hasRich = cart.some(function(i){return i.priceNum===null;});
-  var lines = cart.map(function(i){ return '• '+i.qty+'x '+i.code+' — '+(i.priceLabel||'prezzo su richiesta'); });
-  var msg = 'Ciao FM Design! Vorrei richiedere un preventivo.%0A%0A';
-  msg += '*Preventivo Rif. '+ref+'*%0A';
-  msg += lines.join('%0A');
-  msg += '%0A%0ATotale indicativo: € '+t.toLocaleString('it-IT')+(hasRich?' + (alcuni articoli su richiesta)':'')+' (IVA esclusa)';
-  msg += '%0A%0AResto in attesa di conferma su disponibilità, prezzo finale e modalità di pagamento. Grazie!';
-  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+function genPreventivoImage(){
+  var ref = quoteRef(), dateStr = new Date().toLocaleDateString('it-IT');
+  var S = 2;                       // scala per nitidezza
+  var W = 820, pad = 48;
+  var headTop = 150, colHdr = 60, rowH = 64, totalBlock = 70, footBlock = 110;
+  var rows = cart;
+  var H = headTop + colHdr + rows.length*rowH + totalBlock + footBlock;
+  var c = document.createElement('canvas'); c.width = W*S; c.height = H*S;
+  var x = c.getContext('2d'); x.scale(S,S);
+  x.fillStyle = '#f3f1ee'; x.fillRect(0,0,W,H);
+  // header
+  x.fillStyle = '#111'; x.fillRect(0,0,W,120);
+  x.fillStyle = '#f5f5f5'; x.font = 'bold 42px Arial'; x.textAlign='left'; x.fillText('FM DESIGN', pad, 64);
+  x.fillStyle = '#c8a96e'; x.font = '14px Arial'; x.fillText('Forniture professionali per parrucchieri', pad, 92);
+  x.textAlign = 'right'; x.fillStyle = '#f5f5f5'; x.font = 'bold 22px Arial'; x.fillText('PREVENTIVO', W-pad, 52);
+  x.fillStyle = '#bbb'; x.font = '13px Arial'; x.fillText('Rif. '+ref, W-pad, 76); x.fillText(dateStr, W-pad, 96);
+  // column headers
+  var y = headTop;
+  x.fillStyle = '#777'; x.font = 'bold 12px Arial';
+  x.textAlign='left'; x.fillText('ARTICOLO', pad, y);
+  x.textAlign='center'; x.fillText('Q.TÀ', W-230, y);
+  x.textAlign='right'; x.fillText('PREZZO', W-pad, y);
+  x.strokeStyle = '#111'; x.lineWidth = 2; x.beginPath(); x.moveTo(pad,y+14); x.lineTo(W-pad,y+14); x.stroke();
+  // rows
+  var ry = y + 14;
+  rows.forEach(function(i){
+    var mid = ry + rowH/2;
+    x.textAlign='left'; x.fillStyle='#111'; x.font='bold 21px Arial'; x.fillText(i.code, pad, mid+2);
+    x.fillStyle='#8a8a8a'; x.font='12px Arial'; x.fillText(i.priceLabel||'Prezzo su richiesta', pad, mid+20);
+    x.textAlign='center'; x.fillStyle='#111'; x.font='18px Arial'; x.fillText('×'+i.qty, W-230, mid+6);
+    x.textAlign='right'; x.font='16px Arial'; x.fillText(i.priceLabel||'su richiesta', W-pad, mid+6);
+    x.strokeStyle='#e0ddd8'; x.lineWidth=1; x.beginPath(); x.moveTo(pad,ry+rowH); x.lineTo(W-pad,ry+rowH); x.stroke();
+    ry += rowH;
+  });
+  // total
+  var t = cartTotal(); var hasRich = cart.some(function(i){return i.priceNum===null;});
+  ry += 46;
+  x.textAlign='right'; x.fillStyle='#111'; x.font='bold 24px Arial';
+  x.fillText('Totale indicativo: € '+t.toLocaleString('it-IT')+(hasRich?' +':''), W-pad, ry);
+  // footer
+  ry += 46; x.textAlign='left'; x.fillStyle='#777'; x.font='13px Arial';
+  x.fillText('Prezzi IVA esclusa. Preventivo indicativo e non vincolante'+(hasRich?'; alcuni articoli a prezzo su richiesta.':'.'), pad, ry);
+  ry += 22; x.fillStyle='#111'; x.font='bold 14px Arial';
+  x.fillText('Invia questa immagine su WhatsApp al 334 367 2735 per confermare disponibilità e pagamento.', pad, ry);
+  return c.toDataURL('image/png');
 }
-function scaricaPreventivo(){
+function generaPreventivo(){
   if(cart.length===0) return;
-  var ref = quoteRef(), d = new Date().toLocaleDateString('it-IT');
-  var rows = cart.map(function(i){ return '<tr><td>'+i.code+'</td><td style="text-align:center">'+i.qty+'</td><td style="text-align:right">'+(i.priceLabel||'su richiesta')+'</td></tr>'; }).join('');
-  var t = cartTotal();
-  var hasRich = cart.some(function(i){return i.priceNum===null;});
-  var html = '<html><head><meta charset="utf-8"><title>Preventivo '+ref+'</title>'+
-    '<style>body{font-family:Arial,Helvetica,sans-serif;color:#111;padding:40px;max-width:720px;margin:auto}h1{font-size:22px;letter-spacing:2px;margin:0}table{width:100%;border-collapse:collapse;margin-top:24px}th,td{padding:10px 8px;border-bottom:1px solid #ddd;font-size:14px}th{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#666}.tot{margin-top:18px;text-align:right;font-size:16px;font-weight:bold}.muted{color:#777;font-size:12px;margin-top:6px}.hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #111;padding-bottom:14px}</style>'+
-    '</head><body>'+
-    '<div class="hd"><div><h1>FM DESIGN</h1><div class="muted">Forniture professionali per parrucchieri</div></div>'+
-    '<div style="text-align:right"><div><b>PREVENTIVO</b></div><div class="muted">Rif. '+ref+'<br>'+d+'</div></div></div>'+
-    '<table><thead><tr><th style="text-align:left">Articolo</th><th style="text-align:center">Q.tà</th><th style="text-align:right">Prezzo</th></tr></thead><tbody>'+rows+'</tbody></table>'+
-    '<div class="tot">Totale indicativo: € '+t.toLocaleString('it-IT')+(hasRich?' +':'')+'</div>'+
-    '<p class="muted">Prezzi IVA esclusa. Preventivo indicativo e non vincolante'+(hasRich?'; alcuni articoli a prezzo su richiesta':'')+'. Disponibilità e totale finale da confermare.</p>'+
-    '<p class="muted">Inviare questo preventivo su WhatsApp al 334 367 2735 per concordare pagamento e maggiori informazioni.</p>'+
-    '</body></html>';
-  var w = window.open('', '_blank');
-  if(!w){ alert('Consenti i popup per scaricare il preventivo.'); return; }
-  w.document.write(html); w.document.close();
-  setTimeout(function(){ w.focus(); w.print(); }, 350);
+  window._quoteData = genPreventivoImage();
+  window._quoteRef = quoteRef();
+  document.getElementById('quoteImg').src = window._quoteData;
+  closeCart();
+  document.getElementById('quoteOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+function closeQuote(){ document.getElementById('quoteOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function salvaPreventivoImg(){
+  if(!window._quoteData) return;
+  var a=document.createElement('a'); a.href=window._quoteData; a.download='preventivo-FMDesign-'+(window._quoteRef||'')+'.png';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function apriWhatsApp(){ window.open('https://wa.me/'+WA_NUMBER, '_blank'); }
 renderCart();
 </script>
 </body>
