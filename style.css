@@ -93,6 +93,7 @@
   .product-card:hover .product-cta { opacity:1; transform:translateY(0); }
   .product-info { padding:18px 20px 20px; border-top:2px solid var(--black); }
   .product-code { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; }
+  .product-sub { font-size:10px; letter-spacing:1px; opacity:.55; text-transform:uppercase; margin-top:2px; }
   .product-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
   .product-price { font-size:14px; font-weight:600; }
   .product-colors { display:flex; gap:6px; align-items:center; }
