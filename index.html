@@ -379,23 +379,7 @@ renderGroupedProducts(lavaggio, 'products-lavaggio');
 
 // ─── POLTRONE LAVORO ───
 // NB: sezione in costruzione — modelli caricati finora (gli altri in arrivo)
-const lavoro = [
-  {code:'FMP1', versions:[
-    {code:'FMP1A', price:'350€', img:'images-lavoro/pl_FMP1A.png'},
-    {code:'FMP1B', price:'340€', img:'images-lavoro/pl_FMP1B.png'},
-    {code:'FMP1C', price:'340€', img:'images-lavoro/pl_FMP1C.png'},
-    {code:'FMP1D', price:'350€', img:'images-lavoro/pl_FMP1D.png'},
-    {code:'FMP1E', price:'360€', img:'images-lavoro/pl_FMP1E.png'}
-  ]},
-  {code:'FMP2', versions:[
-    {code:'FMP2A', price:'340€', img:'images-lavoro/pl_FMP2A.png'},
-    {code:'FMP2B', price:'360€', img:'images-lavoro/pl_FMP2B.png'}
-  ]},
-  {code:'FMP3', single:true, versions:[
-    {code:'FMP3', price:'340€', img:'images-lavoro/pl_FMP3.png',
-     specs:"<b>Descrizione:</b> Sedia da taglio con schiuma iniettata di poliuretano ad alta densità e struttura interna in metallo. Base rotonda sottile rifinita in metallo cromato. Pompa idraulica bloccabile con freno. Rivestimento nero.<br><b>Comfort:</b> Schiuma iniettata di poliuretano + struttura interna in metallo<br><b>Qualità:</b> Base in metallo cromato sottile<br><b>Facile da pulire:</b> Monoblocco senza giunture<br><b>Dimensioni:</b> 60×61×45/57 cm<br><b>Peso:</b> 17 kg<br><b>Rivestimento:</b> PVC"}
-  ]}
-];
+const lavoro = [{"code":"FMP1","versions":[{"code":"FMP1A","col":"","price":"350€","img":"images-lavoro/pl_FMP1A.png"},{"code":"FMP1B","col":"","price":"340€","img":"images-lavoro/pl_FMP1B.png"},{"code":"FMP1C","col":"","price":"340€","img":"images-lavoro/pl_FMP1C.png"},{"code":"FMP1D","col":"","price":"350€","img":"images-lavoro/pl_FMP1D.png"},{"code":"FMP1E","col":"","price":"360€","img":"images-lavoro/pl_FMP1E.png"}]},{"code":"FMP2","versions":[{"code":"FMP2B","col":"","price":"360€","img":"images-lavoro/pl_FMP2B.png"},{"code":"FMP2A","col":"","price":"340€","img":"images-lavoro/pl_FMP2A.png"}]},{"code":"FMP3","single":true,"versions":[{"code":"FMP3","price":"340€","img":"images-lavoro/pl_FMP3.png","specs":"<b>Descrizione:</b> Sedia da taglio con schiuma iniettata di poliuretano ad alta densità e struttura interna in metallo. Base rotonda sottile rifinita in metallo cromato. Pompa idraulica bloccabile con freno. Rivestimento nero.<br><b>Comfort:</b> Schiuma iniettata di poliuretano + struttura interna in metallo<br><b>Qualità:</b> Base in metallo cromato sottile<br><b>Facile da pulire:</b> Monoblocco senza giunture<br><b>Dimensioni:</b> 60×61×45/57 cm<br><b>Peso:</b> 17 kg<br><b>Rivestimento:</b> PVC"}]},{"code":"FMP4","single":true,"versions":[{"code":"FMP4","price":"","img":"images-lavoro/pl_FMP4.png","specs":"<b>Descrizione:</b> Sedia con schiuma in\npoliuretano iniettato e\nstruttura interna in metallo\nper massimo comfort ed\neccellente durata.<br><b>Peso netto:</b> 49 kg<br><b>Peso lordo:</b> 59,5 kg<br><b>Carico massimo:</b> 180 kg"}]},{"code":"FMP6","versions":[{"code":"FMP6A","col":"BLACK GOLD","price":"360€","img":"images-lavoro/pl_FMP6A.png"},{"code":"FMP6B","col":"BEIGE GOLD","price":"360€","img":"images-lavoro/pl_FMP6B.png"},{"code":"FMP6C","col":"GREY GOLD","price":"360€","img":"images-lavoro/pl_FMP6C.png"},{"code":"FMP6D","col":"BEIGE BLACK","price":"360€","img":"images-lavoro/pl_FMP6D.png"},{"code":"FMP6E","col":"GREY BLACK","price":"360€","img":"images-lavoro/pl_FMP6E.png"},{"code":"FMP6F","col":"BROWN BLACK","price":"360€","img":"images-lavoro/pl_FMP6F.png"},{"code":"FMP6G","col":"ORANGE","price":"360€","img":"images-lavoro/pl_FMP6G.png"}]},{"code":"FMP7","versions":[{"code":"FMP7A","col":"BLACK","price":"390€","img":"images-lavoro/pl_FMP7A.png"},{"code":"FMP7B","col":"ORANGE","price":"390€","img":"images-lavoro/pl_FMP7B.png"},{"code":"FMP7C","col":"BEIGE","price":"390€","img":"images-lavoro/pl_FMP7C.png"}]},{"code":"FMP8","single":true,"versions":[{"code":"FMP8","price":"","img":null,"specs":""}]},{"code":"FMP9","versions":[{"code":"FMP9A","col":"BLACK","price":"390€","img":"images-lavoro/pl_FMP9A.png"},{"code":"FMP9B","col":"ORANGE","price":"390€","img":"images-lavoro/pl_FMP9B.png"},{"code":"FMP9C","col":"BEIGE","price":"390€","img":"images-lavoro/pl_FMP9C.png"}]},{"code":"FMP10","versions":[{"code":"FMP10B","col":"LACK","price":"390€","img":"images-lavoro/pl_FMP10B.png"},{"code":"FMP10O","col":"RANGE FMP BEIGE Sq","price":"390€","img":"images-lavoro/pl_FMP10O.png"}]},{"code":"FMP11","versions":[{"code":"FMP11A","col":"BROWN FMP","price":"370€","img":"images-lavoro/pl_FMP11A.png"}]},{"code":"FMP12","single":true,"versions":[{"code":"FMP12","price":"","img":null,"specs":""}]},{"code":"FMP13","versions":[{"code":"FMP13B","col":"BROWN","price":"430€","img":"images-lavoro/pl_FMP13B.png"},{"code":"FMP13A","col":"BLACK","price":"430€","img":"images-lavoro/pl_FMP13A.png"}]},{"code":"FMP14","single":true,"versions":[{"code":"FMP14","price":"","img":null,"specs":""}]},{"code":"FMP15","single":true,"versions":[{"code":"FMP15","price":"","img":null,"specs":""}]},{"code":"FMP16","versions":[{"code":"FMP16B","col":"GREY","price":"410€","img":"images-lavoro/pl_FMP16B.png"},{"code":"FMP16A","col":"BLACK","price":"410€","img":"images-lavoro/pl_FMP16A.png"}]},{"code":"FMP17","versions":[{"code":"FMP15G","col":"REY","price":"380€","img":"images-lavoro/pl_FMP15G.png"},{"code":"FMP15B","col":"LACK","price":"380€","img":"images-lavoro/pl_FMP15B.png"}]},{"code":"FMP18","single":true,"versions":[{"code":"FMP18","price":"","img":null,"specs":""}]},{"code":"FMP19","single":true,"versions":[{"code":"FMP19","price":"","img":null,"specs":""}]},{"code":"FMP20","versions":[{"code":"FMP20A","col":"BLACK","price":"320€","img":"images-lavoro/pl_FMP20A.png"},{"code":"FMP20B","col":"BROWN","price":"320€","img":"images-lavoro/pl_FMP20B.png"},{"code":"FMP20C","col":"BEIGE","price":"320€","img":"images-lavoro/pl_FMP20C.png"}]},{"code":"FMP21","single":true,"versions":[{"code":"FMP21","price":"","img":null,"specs":""}]},{"code":"FMP22","versions":[{"code":"FMP22B","col":"SILVER","price":"490€","img":"images-lavoro/pl_FMP22B.png"},{"code":"FMP22A","col":"GOLD","price":"490€","img":"images-lavoro/pl_FMP22A.png"}]},{"code":"FMP23","versions":[{"code":"FMP23B","col":"ROWN FMP BLACK","price":"360€","img":"images-lavoro/pl_FMP23B.png"}]},{"code":"FMP24","single":true,"versions":[{"code":"FMP24","price":"","img":null,"specs":""}]}];
 
 // Indice piatto versione→oggetto per il modale
 const lavoroIndex = {};
@@ -417,6 +401,7 @@ function renderLavoro() {
           </div>
           <div class="product-info">
             <p class="product-code">${v.code}</p>
+            ${v.col ? `<p class="product-sub">${v.col}</p>` : ''}
             <div class="product-bottom">
               <p class="product-price">${v.price||''}</p>
             </div>
@@ -442,9 +427,10 @@ function openLavoroVer(elm) {
   body.innerHTML = `
     <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
     <p class="modal-code">${v.code}</p>
+    ${v.col ? `<p style="font-size:12px;letter-spacing:2px;opacity:.6;margin-bottom:8px">${v.col}</p>` : ''}
     <p class="modal-price">${v.price||''}</p>
     <div class="modal-divider"></div>
-    <img src="${v.img}" style="width:100%;max-height:62vh;object-fit:contain;background:#cfcfcf;margin-bottom:16px;cursor:zoom-in;" onclick="openLightbox(this.src)">
+    ${v.img ? `<img src="${v.img}" style="width:100%;max-height:62vh;object-fit:contain;background:#cfcfcf;margin-bottom:16px;cursor:zoom-in;" onclick="openLightbox(this.src)">` : ''}
     ${v.specs ? `<div class="modal-divider"></div><p class="modal-section-title">Scheda Tecnica</p>
       <div style="background:rgba(17,17,17,0.05);padding:16px 18px;margin-bottom:18px;font-size:12px;line-height:1.9;letter-spacing:0.3px;">${v.specs}</div>` : ''}
     <div class="modal-divider"></div>
