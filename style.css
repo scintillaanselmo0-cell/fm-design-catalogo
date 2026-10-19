@@ -220,3 +220,12 @@
     .color-dot { width:10px; height:10px; }
     .model-group-title { font-size:clamp(46px,16vw,80px); margin-bottom:-10px; }
   }
+
+/* ─── Modal gallery (multi-photo) ─── */
+.modal-gallery{margin-bottom:18px}
+.modal-main-wrap{width:100%;background:#f1f1f1;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.modal-main-img{width:100%;max-height:60vh;object-fit:contain;cursor:zoom-in;display:block}
+.modal-thumbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.modal-thumb{width:64px;height:64px;object-fit:contain;background:#f1f1f1;border:2px solid transparent;border-radius:4px;cursor:pointer;transition:border-color .15s,opacity .15s;opacity:.65}
+.modal-thumb:hover{opacity:1}
+.modal-thumb.active{border-color:#111;opacity:1}
