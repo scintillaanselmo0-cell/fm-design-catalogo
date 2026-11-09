@@ -604,13 +604,17 @@ function openLavoroVer(elm) {
   if (!v) return;
   window._curVer = v;
   window._togIdx = 0;
+  window._unitIdx = 0;
   renderVerModal(v);
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 window._setTog = function(i){ window._togIdx = i; if(window._curVer) renderVerModal(window._curVer); };
+window._setTogC = function(i){ window._togIdx = i; if(window._curVer) renderVerModal(window._curVer); };
+window._setUnitC = function(i){ window._unitIdx = i; if(window._curVer) renderVerModal(window._curVer); };
 function renderVerModal(v) {
-  // supporto toggle (es. FM CONS4 con/senza lavatesta)
+  if (v.configurable) { renderConfigModal(v); return; }
+  // supporto toggle semplice
   const tog = v.toggle;
   const opt = tog ? tog.options[window._togIdx||0] : null;
   const gal = opt ? (opt.imgs||[]) : ((v.imgs && v.imgs.length) ? v.imgs : (v.img ? [v.img] : []));
@@ -640,6 +644,50 @@ function renderVerModal(v) {
     <p class="modal-section-title">Note</p>
     <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
     <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
+    <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${v.code}!')">✉ Richiedi informazioni</button>
+  `;
+}
+// Prodotti componibili (FM CONS4 / FM CONS5): selezione versione+postazioni → prezzo dinamico
+function renderConfigModal(v) {
+  const tog = v.toggle;
+  const opt = tog ? tog.options[window._togIdx||0] : null;
+  const units = opt ? opt.units : v.units;
+  const specs = opt ? opt.specs : v.specs;
+  let uIdx = window._unitIdx||0; if(uIdx>units.length-1) uIdx = units.length-1;
+  const sel = units[uIdx];
+  const selName = v.code + (opt ? ' · '+opt.name : '') + ' · ' + sel.label;
+  window._modalItem = {code: selName, price: sel.price};
+  const togHtml = tog ? `
+    <p style="font-size:10px;letter-spacing:3px;opacity:.45;margin-bottom:8px">VERSIONE</p>
+    <div style="display:flex;gap:8px;margin:0 0 18px;flex-wrap:wrap">
+      ${tog.options.map((o,i)=>`<button onclick="window._setTogC(${i})" style="flex:1;min-width:140px;padding:11px 14px;border:1px solid ${i===(window._togIdx||0)?'#111':'rgba(17,17,17,0.22)'};background:${i===(window._togIdx||0)?'#111':'transparent'};color:${i===(window._togIdx||0)?'#fff':'#111'};font-family:inherit;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.2s">${o.name}</button>`).join('')}
+    </div>` : '';
+  const unitHtml = `
+    <p style="font-size:10px;letter-spacing:3px;opacity:.45;margin-bottom:8px">SCEGLI LA CONFIGURAZIONE</p>
+    <div style="display:grid;grid-template-columns:repeat(${units.length},1fr);gap:8px;margin-bottom:18px">
+      ${units.map((u,i)=>{const on=i===uIdx;return `<button onclick="window._setUnitC(${i})" style="padding:0;border:2px solid ${on?'#111':'rgba(17,17,17,0.18)'};background:${on?'#111':'#fff'};color:${on?'#fff':'#111'};cursor:pointer;transition:.2s;overflow:hidden;text-align:center">
+        <img src="${u.img}" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#f1f1f1">
+        <div style="padding:8px 4px 9px"><div style="font-size:11px;letter-spacing:.5px;text-transform:uppercase;line-height:1.2">${u.label}</div><div style="font-size:13px;font-weight:600;margin-top:3px">${u.price}</div></div>
+      </button>`;}).join('')}
+    </div>`;
+  const body = document.getElementById('modal-body');
+  body.innerHTML = `
+    <p style="font-size:10px;letter-spacing:4px;opacity:.4;margin-bottom:8px">SCHEDA PRODOTTO</p>
+    <p class="modal-code">${v.code}</p>
+    <p class="modal-price" id="cfg-price">${sel.price}</p>
+    <p style="font-size:12px;opacity:.6;margin:-8px 0 16px">Configurazione selezionata: <b>${(opt?opt.name+' · ':'')+sel.label}</b></p>
+    <div class="modal-divider"></div>
+    <div class="modal-gallery">
+      <div class="modal-main-wrap"><img id="modal-main-img" src="${sel.img}" class="modal-main-img" onclick="openLightbox(this.src)"></div>
+    </div>
+    ${togHtml}
+    ${unitHtml}
+    ${specs ? `<div class="modal-divider"></div><p class="modal-section-title">Scheda Tecnica</p>
+      <div style="background:rgba(17,17,17,0.05);padding:16px 18px;margin-bottom:18px;font-size:12px;line-height:1.9;letter-spacing:0.3px;">${specs}</div>` : ''}
+    <div class="modal-divider"></div>
+    <p class="modal-section-title">Note</p>
+    <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA esclusa. Postazioni componibili tra loro in un unico mobile. Per preventivi personalizzati, contattaci direttamente.</p>
+    <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo (${sel.label} — ${sel.price})</button>
     <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${v.code}!')">✉ Richiedi informazioni</button>
   `;
 }
@@ -684,7 +732,7 @@ function renderBarber() {
 renderBarber();
 
 // ─── CONSOLLE / POSTAZIONI ───
-const consolle = [{"code":"FM CONS1","single":true,"versions":[{"code":"FM CONS1","price":"1.350€","img":"images-barber/c_CONS1_1.jpg","imgs":["images-barber/c_CONS1_1.jpg","images-barber/c_CONS1_2.jpg"],"specs":"Postazione barber in legno impiallacciato con cornici in legno massello e lavatesta incorporata. Molteplici vani di archiviazione, scaffali e piani di lavoro. Stile industriale con tocco retrò."}]},{"code":"FM CONS2","versions":[{"code":"FM CONS2 BLACK/WHITE","col":"","price":"1.250€","img":"images-barber/c_CONS2_bw.jpg","imgs":["images-barber/c_CONS2_bw.jpg"]},{"code":"FM CONS2 TOTAL BLACK","col":"","price":"1.250€","img":"images-barber/c_CONS2_black.jpg","imgs":["images-barber/c_CONS2_black.jpg"]},{"code":"FM CONS2 GREY","col":"","price":"1.100€","img":"images-barber/c_CONS2_grey.jpg","imgs":["images-barber/c_CONS2_grey.jpg"]}]},{"code":"FM CONS3","single":true,"versions":[{"code":"FM CONS3","price":"1.300€","img":"images-barber/c_CONS3_1.jpg","imgs":["images-barber/c_CONS3_1.jpg"]}]},{"code":"FM CONS4","single":true,"versions":[{"code":"FM CONS4","price":"Prezzo su quantità","img":"images-barber/c_CONS4_conlav_1.jpg","toggle":{"options":[{"name":"Con lavatesta","imgs":["images-barber/c_CONS4_conlav_1.jpg","images-barber/c_CONS4_conlav_2.jpg","images-barber/c_CONS4_conlav_3.jpg"],"specs":"<b>Barber Station — Predisposizione Vasca (lavatesta)</b><br>Postazione modulare componibile. Prezzo per unità:<br><b>1 postazione:</b> 3.030€<br><b>2 postazioni:</b> 5.330€<br><b>3 postazioni:</b> 7.630€<br><br><b>Altezza:</b> 200 cm · <b>Profondità:</b> 40 cm<br><b>Larghezza:</b> 170 cm (1 pz) · 300 cm (2 pz) · 430 cm (3 pz)<br><b>Colori:</b> Nero Frassino · Wengè"},{"name":"Senza lavatesta","imgs":["images-barber/c_CONS4_senzalav_1.jpg","images-barber/c_CONS4_senzalav_2.jpg","images-barber/c_CONS4_senzalav_3.jpg"],"specs":"<b>Barber Station — Predisposizione Lavello</b><br>Postazione modulare componibile. Prezzo per unità:<br><b>1 postazione:</b> 2.990€<br><b>2 postazioni:</b> 5.250€<br><b>3 postazioni:</b> 7.510€<br><br><b>Altezza:</b> 200 cm · <b>Profondità:</b> 40 cm<br><b>Larghezza:</b> 170 cm (1 pz) · 300 cm (2 pz) · 430 cm (3 pz)<br><b>Colori:</b> Nero Frassino · Wengè"}]}}]},{"code":"FM CONS5","single":true,"versions":[{"code":"FM CONS5","price":"Prezzo su quantità","img":"images-barber/c_CONS5_1.jpg","imgs":["images-barber/c_CONS5_1.jpg","images-barber/c_CONS5_2.jpg","images-barber/c_CONS5_3.jpg"],"specs":"<b>Barber Old — Postazione con predisposizione vasca (lavatesta)</b><br>Postazione modulare componibile, finitura in legno scuro. Prezzo per unità:<br><b>1 postazione:</b> 4.990€<br><b>2 postazioni:</b> 7.990€<br><b>3 postazioni:</b> 12.290€<br><br><b>Altezza:</b> 230 cm · <b>Profondità:</b> 40 cm<br><b>Larghezza:</b> 190 cm (1 pz) · 340 cm (2 pz) · 490 cm (3 pz)<br><b>Colori:</b> Wengè · Nero Frassino"}]},{"code":"FM CONS6","single":true,"versions":[{"code":"FM CONS6","price":"1.300€","img":"images-barber/c_CONS6_1.jpg","imgs":["images-barber/c_CONS6_1.jpg"]}]}];
+const consolle = [{"code":"FM CONS1","single":true,"versions":[{"code":"FM CONS1","price":"1.350€","img":"images-barber/c_CONS1_1.jpg","imgs":["images-barber/c_CONS1_1.jpg","images-barber/c_CONS1_2.jpg"],"specs":"Postazione barber in legno impiallacciato con cornici in legno massello e lavatesta incorporata. Molteplici vani di archiviazione, scaffali e piani di lavoro. Stile industriale con tocco retrò."}]},{"code":"FM CONS2","versions":[{"code":"FM CONS2 BLACK/WHITE","col":"","price":"1.250€","img":"images-barber/c_CONS2_bw.jpg","imgs":["images-barber/c_CONS2_bw.jpg"]},{"code":"FM CONS2 TOTAL BLACK","col":"","price":"1.250€","img":"images-barber/c_CONS2_black.jpg","imgs":["images-barber/c_CONS2_black.jpg"]},{"code":"FM CONS2 GREY","col":"","price":"1.100€","img":"images-barber/c_CONS2_grey.jpg","imgs":["images-barber/c_CONS2_grey.jpg"]}]},{"code":"FM CONS3","single":true,"versions":[{"code":"FM CONS3","price":"1.300€","img":"images-barber/c_CONS3_1.jpg","imgs":["images-barber/c_CONS3_1.jpg"]}]},{"code":"FM CONS4","single":true,"versions":[{"code":"FM CONS4","configurable":true,"price":"da 2.990€","img":"images-barber/c_CONS4_cover.jpg","toggle":{"options":[{"name":"Con lavatesta","specs":"<b>Barber Station — Predisposizione Vasca (lavatesta)</b><br>Postazione modulare componibile.<br><br><b>Altezza:</b> 200 cm · <b>Profondità:</b> 40 cm<br><b>Larghezza:</b> 170 cm (1 pz) · 300 cm (2 pz) · 430 cm (3 pz)<br><b>Colori:</b> Nero Frassino · Wengè","units":[{"label":"1 postazione","img":"images-barber/c_CONS4_conlav_1.jpg","price":"3.030€"},{"label":"2 postazioni","img":"images-barber/c_CONS4_conlav_2.jpg","price":"5.330€"},{"label":"3 postazioni","img":"images-barber/c_CONS4_conlav_3.jpg","price":"7.630€"}]},{"name":"Senza lavatesta","specs":"<b>Barber Station — Predisposizione Lavello</b><br>Postazione modulare componibile.<br><br><b>Altezza:</b> 200 cm · <b>Profondità:</b> 40 cm<br><b>Larghezza:</b> 170 cm (1 pz) · 300 cm (2 pz) · 430 cm (3 pz)<br><b>Colori:</b> Nero Frassino · Wengè","units":[{"label":"1 postazione","img":"images-barber/c_CONS4_senzalav_1.jpg","price":"2.990€"},{"label":"2 postazioni","img":"images-barber/c_CONS4_senzalav_2.jpg","price":"5.250€"},{"label":"3 postazioni","img":"images-barber/c_CONS4_senzalav_3.jpg","price":"7.510€"}]}]}}]},{"code":"FM CONS5","single":true,"versions":[{"code":"FM CONS5","configurable":true,"price":"da 4.990€","img":"images-barber/c_CONS5_cover.jpg","specs":"<b>Barber Old — Postazione con predisposizione vasca (lavatesta)</b><br>Postazione modulare componibile, finitura in legno scuro.<br><br><b>Altezza:</b> 230 cm · <b>Profondità:</b> 40 cm<br><b>Larghezza:</b> 190 cm (1 pz) · 340 cm (2 pz) · 490 cm (3 pz)<br><b>Colori:</b> Wengè · Nero Frassino","units":[{"label":"1 postazione","img":"images-barber/c_CONS5_1.jpg","price":"4.990€"},{"label":"2 postazioni","img":"images-barber/c_CONS5_2.jpg","price":"7.990€"},{"label":"3 postazioni","img":"images-barber/c_CONS5_3.jpg","price":"12.290€"}]}]},{"code":"FM CONS6","single":true,"versions":[{"code":"FM CONS6","price":"1.300€","img":"images-barber/c_CONS6_1.jpg","imgs":["images-barber/c_CONS6_1.jpg"],"specs":"Postazione retrobarba con lavatesta in ceramica, specchio centrale e applique integrate, finitura nera.<br><br><b>Altezza:</b> 206 cm · <b>Larghezza:</b> 160 cm · <b>Profondità:</b> 45 cm"}]}];
 consolle.forEach(m => m.versions.forEach(v => { lavoroIndex[v.code] = Object.assign({model:m.code}, v); }));
 function renderConsolle(){
   const el=document.getElementById('products-consolle');
