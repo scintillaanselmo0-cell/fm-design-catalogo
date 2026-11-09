@@ -18,7 +18,7 @@
   <nav>
     <a href="#" onclick="showSection('lavaggio')">Lavaggio</a>
     <a href="#" onclick="showSection('lavoro')">Poltrone Lavoro</a>
-    <a href="#" onclick="alert('Sezione in arrivo!')">Barber</a>
+    <a href="#" onclick="showSection('barber')">Barber</a>
     <a href="#" onclick="alert('Sezione in arrivo!')">Complementi</a>
     <a href="#" class="nav-cta">Contatti</a>
   </nav>
@@ -53,8 +53,8 @@
       <div class="cat-info"><p class="cat-num">02</p><p class="cat-name">Poltrone Lavoro</p></div>
       <span class="cat-arrow">→</span>
     </div>
-    <div class="cat-card" onclick="alert('Sezione in arrivo!')">
-      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Barber" onerror="this.style.display='none'">
+    <div class="cat-card" onclick="showSection('barber')">
+      <img src="images-barber/b_FMB6_1.png" alt="Barber" onerror="this.style.display='none'">
       <div class="cat-info"><p class="cat-num">03</p><p class="cat-name">Barber</p></div>
       <span class="cat-arrow">→</span>
     </div>
@@ -100,6 +100,19 @@
     <p class="section-count" id="count-lavoro"></p>
   </div>
   <div class="product-groups" id="products-lavoro"></div>
+</section>
+
+<!-- BARBER SECTION -->
+<section class="section" id="barber" style="display:none">
+  <button class="back-btn" onclick="showHome()">← Torna al catalogo</button>
+  <div class="section-head">
+    <div>
+      <p class="section-label">Categoria 03</p>
+      <h2>POLTRONE<br>BARBER</h2>
+    </div>
+    <p class="section-count" id="count-barber"></p>
+  </div>
+  <div class="product-groups" id="products-barber"></div>
 </section>
 
 <!-- MODAL -->
@@ -601,6 +614,43 @@ function openLavoroVer(elm) {
 
 renderLavoro();
 
+// ─── BARBER ───
+const barber = [{"code":"FMB5","single":true,"versions":[{"code":"FMB5","col":"BLACK","price":"Su richiesta","img":"images-barber/b_FMB5_1.png","imgs":["images-barber/b_FMB5_1.png","images-barber/b_FMB5_4.png","images-barber/b_FMB5_5.png"]}]},{"code":"FMB6","single":true,"versions":[{"code":"FMB6","col":"BLACK","price":"840€","img":"images-barber/b_FMB6_1.png","imgs":["images-barber/b_FMB6_1.png","images-barber/b_FMB6_4.png","images-barber/b_FMB6_5.png"]}]},{"code":"FMB7","versions":[{"code":"FMB7R","col":"BORDEAUX","price":"Su richiesta","img":"images-barber/b_FMB7_1.png","imgs":["images-barber/b_FMB7_1.png"]},{"code":"FMB7BG","col":"BLACK GOLD","price":"Su richiesta","img":"images-barber/b_FMB7_2.png","imgs":["images-barber/b_FMB7_2.png"]},{"code":"FMB7BR","col":"BROWN","price":"Su richiesta","img":"images-barber/b_FMB7_3.png","imgs":["images-barber/b_FMB7_3.png"]},{"code":"FMB7C","col":"CAMEL","price":"Su richiesta","img":"images-barber/b_FMB7_4.png","imgs":["images-barber/b_FMB7_4.png"]},{"code":"FMB7G","col":"GREY","price":"920€","img":"images-barber/b_FMB7_5.png","imgs":["images-barber/b_FMB7_5.png"]},{"code":"FMB7W","col":"WHITE GOLD","price":"1.040€","img":"images-barber/b_FMB7_6.png","imgs":["images-barber/b_FMB7_6.png"]},{"code":"FMB7RG","col":"BROWN ROSE GOLD","price":"930€","img":"images-barber/b_FMB7_7.png","imgs":["images-barber/b_FMB7_7.png"]},{"code":"FMB7B","col":"BLACK","price":"Su richiesta","img":"images-barber/b_FMB7_8.png","imgs":["images-barber/b_FMB7_8.png"]}]},{"code":"FMB8","single":true,"versions":[{"code":"FMB8","col":"BLACK","price":"540€","img":"images-barber/b_FMB8_1.png","imgs":["images-barber/b_FMB8_1.png","images-barber/b_FMB8_4.png","images-barber/b_FMB8_5.png"]}]},{"code":"FMB9","single":true,"versions":[{"code":"FMB9","col":"BLACK","price":"640€","img":"images-barber/b_FMB9_1.png","imgs":["images-barber/b_FMB9_1.png"]}]},{"code":"FMB10","single":true,"versions":[{"code":"FMB10","col":"WHITE","price":"590€","img":"images-barber/b_FMB10_2.png","imgs":["images-barber/b_FMB10_2.png","images-barber/b_FMB10_1.png"]}]},{"code":"FMB11","versions":[{"code":"FMB11A","col":"BLACK","price":"840€","img":"images-barber/b_FMB11_1.png","imgs":["images-barber/b_FMB11_1.png"]},{"code":"FMB11B","col":"GREY","price":"840€","img":"images-barber/b_FMB11_2.png","imgs":["images-barber/b_FMB11_2.png"]}]},{"code":"FMB12","single":true,"versions":[{"code":"FMB12","col":"GREY","price":"770€","img":"images-barber/b_FMB12_1.png","imgs":["images-barber/b_FMB12_1.png","images-barber/b_FMB12_2.png"]}]},{"code":"FMB13","single":true,"versions":[{"code":"FMB13","col":"BROWN","price":"Su richiesta","img":"images-barber/b_FMB13_1.png","imgs":["images-barber/b_FMB13_1.png","images-barber/b_FMB13_2.png"]}]},{"code":"FMB14","single":true,"versions":[{"code":"FMB14","col":"BLACK","price":"740€","img":"images-barber/b_FMB14_1.png","imgs":["images-barber/b_FMB14_1.png","images-barber/b_FMB14_2.png"]}]},{"code":"FMB15","versions":[{"code":"FMB15A","col":"BLACK","price":"730€","img":"images-barber/b_FMB15_1.png","imgs":["images-barber/b_FMB15_1.png"]},{"code":"FMB15B","col":"BROWN","price":"730€","img":"images-barber/b_FMB15_2.png","imgs":["images-barber/b_FMB15_2.png"]}]},{"code":"FMB17","single":true,"versions":[{"code":"FMB17","col":"BLACK","price":"740€","img":"images-barber/b_FMB17_2.png","imgs":["images-barber/b_FMB17_2.png","images-barber/b_FMB17_1.png"]}]}];
+barber.forEach(m => m.versions.forEach(v => { lavoroIndex[v.code] = Object.assign({model:m.code}, v); }));
+function renderBarber() {
+  const el = document.getElementById('products-barber');
+  if (!el) return;
+  el.innerHTML = barber.map(model => {
+    const cards = model.versions.map(v => {
+      const imgHtml = v.img
+        ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.code}" loading="lazy" onerror="this.style.display='none'">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#b0b0b0"><span style="font-family:'Bebas Neue',sans-serif;font-size:36px;opacity:0.25">${v.code}</span></div>`;
+      return `
+        <div class="product-card" data-ver="${v.code}" onclick="openLavoroVer(this)">
+          <div class="product-img-wrap">
+            ${imgHtml}
+            <div class="product-overlay"><span class="product-cta">Vedi scheda</span></div>
+          </div>
+          <div class="product-info">
+            <p class="product-code">${v.code}</p>
+            ${v.col ? `<p class="product-sub">${v.col}</p>` : ''}
+            <div class="product-bottom">
+              <p class="product-price">${v.price||''}</p>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+    return `
+      <div class="model-group">
+        <h3 class="model-group-title">${model.code}</h3>
+        <div class="products-grid">${cards}</div>
+      </div>`;
+  }).join('');
+  const cnt = document.getElementById('count-barber');
+  if (cnt) cnt.textContent = barber.length + ' modelli';
+}
+renderBarber();
+
 // ─── MODAL ───
 let currentVersionIndex = 0;
 let currentProduct = null;
@@ -798,6 +848,7 @@ function showSection(id) {
   document.getElementById('categories').style.display = 'none';
   document.getElementById('lavaggio').style.display = id === 'lavaggio' ? 'block' : 'none';
   document.getElementById('lavoro').style.display = id === 'lavoro' ? 'block' : 'none';
+  document.getElementById('barber').style.display = id === 'barber' ? 'block' : 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -806,6 +857,7 @@ function showHome() {
   document.getElementById('categories').style.display = 'block';
   document.getElementById('lavaggio').style.display = 'none';
   document.getElementById('lavoro').style.display = 'none';
+  document.getElementById('barber').style.display = 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
