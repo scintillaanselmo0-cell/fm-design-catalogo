@@ -19,6 +19,7 @@
     <a href="#" onclick="showSection('lavaggio')">Lavaggio</a>
     <a href="#" onclick="showSection('lavoro')">Poltrone Lavoro</a>
     <a href="#" onclick="showSection('barber')">Barber</a>
+    <a href="#" onclick="showSection('postazioni')">Postazioni</a>
     <a href="#" onclick="alert('Sezione in arrivo!')">Complementi</a>
     <a href="#" class="nav-cta">Contatti</a>
   </nav>
@@ -55,12 +56,12 @@
     </div>
     <div class="cat-card" onclick="showSection('barber')">
       <img src="images-barber/b_FMB6_1.png" alt="Barber" onerror="this.style.display='none'">
-      <div class="cat-info"><p class="cat-num">03</p><p class="cat-name">Barber</p></div>
+      <div class="cat-info"><p class="cat-num">03</p><p class="cat-name">Poltrone Barber</p></div>
       <span class="cat-arrow">→</span>
     </div>
-    <div class="cat-card" onclick="alert('Sezione in arrivo!')">
-      <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80" alt="Postazioni" onerror="this.style.display='none'">
-      <div class="cat-info"><p class="cat-num">04</p><p class="cat-name">Postazioni Uomo/Donna</p></div>
+    <div class="cat-card" onclick="showSection('postazioni')">
+      <img src="images-barber/c_CONS1_1.jpg" alt="Postazioni / Specchi" onerror="this.style.display='none'">
+      <div class="cat-info"><p class="cat-num">04</p><p class="cat-name">Postazioni / Specchi</p></div>
       <span class="cat-arrow">→</span>
     </div>
     <div class="cat-card" onclick="alert('Sezione in arrivo!')">
@@ -108,14 +109,27 @@
   <div class="section-head">
     <div>
       <p class="section-label">Categoria 03</p>
-      <h2>BARBER</h2>
+      <h2>POLTRONE<br>BARBER</h2>
     </div>
     <p class="section-count" id="count-barber"></p>
   </div>
-  <h3 class="subcat-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,46px);letter-spacing:3px;margin:10px 0 24px;padding-bottom:10px;border-bottom:2px solid #111">POLTRONE</h3>
   <div class="product-groups" id="products-barber"></div>
-  <h3 class="subcat-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,46px);letter-spacing:3px;margin:60px 0 24px;padding-bottom:10px;border-bottom:2px solid #111">POSTAZIONI</h3>
+</section>
+
+<!-- POSTAZIONI / SPECCHI SECTION -->
+<section class="section" id="postazioni" style="display:none">
+  <button class="back-btn" onclick="showHome()">← Torna al catalogo</button>
+  <div class="section-head">
+    <div>
+      <p class="section-label">Categoria 04</p>
+      <h2>POSTAZIONI<br>SPECCHI</h2>
+    </div>
+    <p class="section-count" id="count-postazioni"></p>
+  </div>
+  <h3 class="subcat-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,46px);letter-spacing:3px;margin:10px 0 24px;padding-bottom:10px;border-bottom:2px solid #111">POSTAZIONI RETROBARBA</h3>
   <div class="product-groups" id="products-consolle"></div>
+  <h3 class="subcat-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,46px);letter-spacing:3px;margin:60px 0 24px;padding-bottom:10px;border-bottom:2px solid #111">SPECCHI</h3>
+  <div class="product-groups" id="products-specchi"></div>
 </section>
 
 <!-- MODAL -->
@@ -680,10 +694,39 @@ function renderConsolle(){
     }).join('');
     return `<div class="model-group"><h3 class="model-group-title">${model.code}</h3><div class="products-grid">${cards}</div></div>`;
   }).join('');
-  const cnt=document.getElementById('count-barber');
-  if(cnt) cnt.textContent = barber.length + ' poltrone · ' + consolle.length + ' postazioni';
 }
 renderConsolle();
+
+// ─── SPECCHI ───
+const specchi = [{"code":"FMR1","versions":[{"code":"FMR1 SILVER","col":"","price":"350€","img":"images-barber/r_FMR1_silver.jpg","imgs":["images-barber/r_FMR1_silver.jpg"]},{"code":"FMR1 GOLD","col":"","price":"350€","img":"images-barber/r_FMR1_gold.jpg","imgs":["images-barber/r_FMR1_gold.jpg"]},{"code":"FMR1 BLACK","col":"","price":"350€","img":"images-barber/r_FMR1_black.jpg","imgs":["images-barber/r_FMR1_black.jpg"]}]},{"code":"FMR2","versions":[{"code":"FMR2 SILVER","col":"","price":"270€","img":"images-barber/r_FMR2_silver.jpg","imgs":["images-barber/r_FMR2_silver.jpg"]},{"code":"FMR2 GOLD","col":"","price":"270€","img":"images-barber/r_FMR2_gold.jpg","imgs":["images-barber/r_FMR2_gold.jpg"]},{"code":"FMR2 BLACK","col":"","price":"270€","img":"images-barber/r_FMR2_black.jpg","imgs":["images-barber/r_FMR2_black.jpg"]}]},{"code":"FMR3","versions":[{"code":"FMR3 SILVER","col":"","price":"350€","img":"images-barber/r_FMR3_silver.jpg","imgs":["images-barber/r_FMR3_silver.jpg"]},{"code":"FMR3 GOLD","col":"","price":"350€","img":"images-barber/r_FMR3_gold.jpg","imgs":["images-barber/r_FMR3_gold.jpg"]},{"code":"FMR3 BLACK","col":"","price":"350€","img":"images-barber/r_FMR3_black.jpg","imgs":["images-barber/r_FMR3_black.jpg"]}]},{"code":"FMR4","single":true,"versions":[{"code":"FMR4","price":"350€","img":"images-barber/r_FMR4_1.jpg","imgs":["images-barber/r_FMR4_1.jpg","images-barber/r_FMR4_2.jpg","images-barber/r_FMR4_3.jpg"],"specs":"Specchio da toeletta ovale 170×70 cm con illuminazione LED indiretta integrata sul retro (luce perimetrale morbida e uniforme). Regolazione di intensità e temperatura colore. Ideale per creare atmosfere rilassanti e accoglienti."}]}];
+specchi.forEach(m => m.versions.forEach(v => { lavoroIndex[v.code] = Object.assign({model:m.code}, v); }));
+function renderSpecchi(){
+  const el=document.getElementById('products-specchi');
+  if(!el) return;
+  el.innerHTML = specchi.map(model => {
+    const cards = model.versions.map(v => {
+      const imgHtml = v.img
+        ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.code}" loading="lazy" onerror="this.style.display='none'">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#b0b0b0"><span style="font-family:'Bebas Neue',sans-serif;font-size:36px;opacity:0.25">${v.code}</span></div>`;
+      return `
+        <div class="product-card" data-ver="${v.code}" onclick="openLavoroVer(this)">
+          <div class="product-img-wrap">
+            ${imgHtml}
+            <div class="product-overlay"><span class="product-cta">Vedi scheda</span></div>
+          </div>
+          <div class="product-info">
+            <p class="product-code">${v.code}</p>
+            ${v.col ? `<p class="product-sub">${v.col}</p>` : ''}
+            <div class="product-bottom"><p class="product-price">${v.price||''}</p></div>
+          </div>
+        </div>`;
+    }).join('');
+    return `<div class="model-group"><h3 class="model-group-title">${model.code}</h3><div class="products-grid">${cards}</div></div>`;
+  }).join('');
+  const cnt=document.getElementById('count-postazioni');
+  if(cnt) cnt.textContent = consolle.length + ' postazioni · ' + specchi.length + ' specchi';
+}
+renderSpecchi();
 
 // ─── MODAL ───
 let currentVersionIndex = 0;
@@ -883,6 +926,7 @@ function showSection(id) {
   document.getElementById('lavaggio').style.display = id === 'lavaggio' ? 'block' : 'none';
   document.getElementById('lavoro').style.display = id === 'lavoro' ? 'block' : 'none';
   document.getElementById('barber').style.display = id === 'barber' ? 'block' : 'none';
+  document.getElementById('postazioni').style.display = id === 'postazioni' ? 'block' : 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -892,6 +936,7 @@ function showHome() {
   document.getElementById('lavaggio').style.display = 'none';
   document.getElementById('lavoro').style.display = 'none';
   document.getElementById('barber').style.display = 'none';
+  document.getElementById('postazioni').style.display = 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
