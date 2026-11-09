@@ -108,11 +108,14 @@
   <div class="section-head">
     <div>
       <p class="section-label">Categoria 03</p>
-      <h2>POLTRONE<br>BARBER</h2>
+      <h2>BARBER</h2>
     </div>
     <p class="section-count" id="count-barber"></p>
   </div>
+  <h3 class="subcat-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,46px);letter-spacing:3px;margin:10px 0 24px;padding-bottom:10px;border-bottom:2px solid #111">POLTRONE</h3>
   <div class="product-groups" id="products-barber"></div>
+  <h3 class="subcat-title" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,46px);letter-spacing:3px;margin:60px 0 24px;padding-bottom:10px;border-bottom:2px solid #111">POSTAZIONI</h3>
+  <div class="product-groups" id="products-consolle"></div>
 </section>
 
 <!-- MODAL -->
@@ -650,6 +653,37 @@ function renderBarber() {
   if (cnt) cnt.textContent = barber.length + ' modelli';
 }
 renderBarber();
+
+// ─── CONSOLLE / POSTAZIONI ───
+const consolle = [{"code":"FM CONS1","single":true,"versions":[{"code":"FM CONS1","price":"1.350€","img":"images-barber/c_CONS1_1.jpg","imgs":["images-barber/c_CONS1_1.jpg","images-barber/c_CONS1_2.jpg"],"specs":"Postazione barber in legno impiallacciato con cornici in legno massello e lavatesta incorporata. Molteplici vani di archiviazione, scaffali e piani di lavoro. Stile industriale con tocco retrò."}]},{"code":"FM CONS2","versions":[{"code":"FM CONS2 BLACK/WHITE","col":"","price":"1.250€","img":"images-barber/c_CONS2_bw.jpg","imgs":["images-barber/c_CONS2_bw.jpg"]},{"code":"FM CONS2 TOTAL BLACK","col":"","price":"1.250€","img":"images-barber/c_CONS2_black.jpg","imgs":["images-barber/c_CONS2_black.jpg"]},{"code":"FM CONS2 GREY","col":"","price":"1.100€","img":"images-barber/c_CONS2_grey.jpg","imgs":["images-barber/c_CONS2_grey.jpg"]}]},{"code":"FM CONS3","single":true,"versions":[{"code":"FM CONS3","price":"1.300€","img":"images-barber/c_CONS3_1.jpg","imgs":["images-barber/c_CONS3_1.jpg"]}]},{"code":"FM CONS4","single":true,"versions":[{"code":"FM CONS4","price":"Prezzo su quantità","img":"images-barber/c_CONS4_1.jpg","imgs":["images-barber/c_CONS4_1.jpg","images-barber/c_CONS4_2.jpg","images-barber/c_CONS4_3.jpg"],"specs":"Postazione modulare componibile. Il prezzo dipende dal numero di unità:<br><b>1 unità:</b> 3.030€<br><b>2 unità:</b> 5.330€<br><b>3 unità:</b> 7.630€"}]},{"code":"FM CONS5","single":true,"versions":[{"code":"FM CONS5","price":"Prezzo su quantità","img":"images-barber/c_CONS5_1.jpg","imgs":["images-barber/c_CONS5_1.jpg","images-barber/c_CONS5_2.jpg"],"specs":"Postazione modulare componibile, finitura in legno scuro. Il prezzo dipende dal numero di unità:<br><b>1 unità:</b> 4.990€<br><b>2 unità:</b> 7.990€<br><b>3 unità:</b> 12.290€"}]},{"code":"FM CONS6","single":true,"versions":[{"code":"FM CONS6","price":"1.300€","img":"images-barber/c_CONS6_1.jpg","imgs":["images-barber/c_CONS6_1.jpg"]}]}];
+consolle.forEach(m => m.versions.forEach(v => { lavoroIndex[v.code] = Object.assign({model:m.code}, v); }));
+function renderConsolle(){
+  const el=document.getElementById('products-consolle');
+  if(!el) return;
+  el.innerHTML = consolle.map(model => {
+    const cards = model.versions.map(v => {
+      const imgHtml = v.img
+        ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.code}" loading="lazy" onerror="this.style.display='none'">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#b0b0b0"><span style="font-family:'Bebas Neue',sans-serif;font-size:36px;opacity:0.25">${v.code}</span></div>`;
+      return `
+        <div class="product-card" data-ver="${v.code}" onclick="openLavoroVer(this)">
+          <div class="product-img-wrap">
+            ${imgHtml}
+            <div class="product-overlay"><span class="product-cta">Vedi scheda</span></div>
+          </div>
+          <div class="product-info">
+            <p class="product-code">${v.code}</p>
+            ${v.col ? `<p class="product-sub">${v.col}</p>` : ''}
+            <div class="product-bottom"><p class="product-price">${v.price||''}</p></div>
+          </div>
+        </div>`;
+    }).join('');
+    return `<div class="model-group"><h3 class="model-group-title">${model.code}</h3><div class="products-grid">${cards}</div></div>`;
+  }).join('');
+  const cnt=document.getElementById('count-barber');
+  if(cnt) cnt.textContent = barber.length + ' poltrone · ' + consolle.length + ' postazioni';
+}
+renderConsolle();
 
 // ─── MODAL ───
 let currentVersionIndex = 0;
