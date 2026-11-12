@@ -212,6 +212,10 @@
 <button class="cart-fab" id="cartFab" onclick="openCart()" aria-label="Preventivo">
   <span class="cart-ico">🛒</span><span class="cart-count" id="cartCount">0</span>
 </button>
+<div class="cart-toast" id="cartToast">
+  <div><small>Aggiunto al preventivo</small><b id="cartToastTxt"></b></div>
+  <button onclick="openCart()">Vedi preventivo</button>
+</div>
 <div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()">
   <div class="cart-panel">
     <div class="cart-head">
@@ -711,7 +715,8 @@ function renderVerModal(v) {
     <div class="modal-divider"></div>
     <p class="modal-section-title">Note</p>
     <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA inclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
-    <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
+    ${qtyBoxHtml()}
+      <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
     <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${v.code}!')">✉ Richiedi informazioni</button>
   `;
 }
@@ -755,7 +760,8 @@ function renderConfigModal(v) {
     <div class="modal-divider"></div>
     <p class="modal-section-title">Note</p>
     <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA inclusa. Postazioni componibili tra loro in un unico mobile. Per preventivi personalizzati, contattaci direttamente.</p>
-    <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo (${sel.label} — ${sel.price})</button>
+    ${qtyBoxHtml()}
+      <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo (${sel.label} — ${sel.price})</button>
     <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${v.code}!')">✉ Richiedi informazioni</button>
   `;
 }
@@ -1023,6 +1029,7 @@ function renderModal() {
       <div class="modal-divider"></div>
       <p class="modal-section-title">Note</p>
       <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA inclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
+      ${qtyBoxHtml()}
       <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
       <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${p.code}!')">✉ Richiedi informazioni</button>
     `;
@@ -1049,6 +1056,7 @@ function renderModal() {
       <div class="modal-divider"></div>
       <p class="modal-section-title">Note</p>
       <p style="font-size:13px;opacity:.7;margin-bottom:22px;line-height:1.6">Prezzi indicativi IVA inclusa. Per informazioni su varianti, tempi di consegna e preventivi personalizzati, contattaci direttamente.</p>
+      ${qtyBoxHtml()}
       <button class="modal-cart" onclick="addCurrentToCart()">+ Aggiungi al preventivo</button>
       <button class="modal-contact" onclick="alert('Contattaci per informazioni su ${p.code}!')">✉ Richiedi informazioni</button>
     `;
@@ -1170,12 +1178,37 @@ function parsePrice(label){
   var m = s.replace(/\./g,'').match(/\d+/);
   return m ? parseInt(m[0],10) : null;
 }
-function addToCart(code, priceLabel){
+function addToCart(code, priceLabel, qty){
+  var q = Math.max(1, parseInt(qty,10)||1);
   var ex = cart.find(function(i){return i.code===code;});
-  if(ex){ ex.qty++; } else { cart.push({code:code, priceLabel:priceLabel||'', priceNum:parsePrice(priceLabel), qty:1}); }
+  if(ex){ ex.qty += q; } else { cart.push({code:code, priceLabel:priceLabel||'', priceNum:parsePrice(priceLabel), qty:q}); }
   saveCart(); renderCart(); bumpFab();
 }
-function addCurrentToCart(){ if(window._modalItem){ addToCart(window._modalItem.code, window._modalItem.price); var f=document.getElementById('cartFab'); if(f) f.classList.add('bump'); } }
+function qtyBoxHtml(){
+  window._modalQty = 1;
+  return '<div class="qty-row"><span class="qty-label">Quantit\u00e0</span>'+
+         '<div class="qty-stepper"><button type="button" onclick="setModalQty(-1)">\u2212</button>'+
+         '<span id="modalQty">1</span>'+
+         '<button type="button" onclick="setModalQty(1)">+</button></div></div>';
+}
+function setModalQty(d){
+  window._modalQty = Math.max(1, (window._modalQty||1) + d);
+  var el = document.getElementById('modalQty');
+  if(el) el.textContent = window._modalQty;
+}
+function showCartToast(code, q){
+  var t = document.getElementById('cartToast'); if(!t) return;
+  document.getElementById('cartToastTxt').textContent = code + (q>1 ? '  \u00d7'+q : '');
+  t.classList.add('show');
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(function(){ t.classList.remove('show'); }, 3200);
+}
+function addCurrentToCart(){
+  if(!window._modalItem) return;
+  var q = Math.max(1, window._modalQty||1);
+  addToCart(window._modalItem.code, window._modalItem.price, q);
+  showCartToast(window._modalItem.code, q);
+}
 function changeQty(code, d){
   var it = cart.find(function(i){return i.code===code;});
   if(!it) return;
@@ -1211,7 +1244,7 @@ function renderCart(){
   var hasRich = cart.some(function(i){return i.priceNum===null;});
   document.getElementById('cartTotal').textContent = '€ '+t.toLocaleString('it-IT') + (hasRich? ' +' : '');
 }
-function openCart(){ renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function openCart(){ var _t=document.getElementById('cartToast'); if(_t) _t.classList.remove('show'); renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeCart(){ document.getElementById('cartOverlay').classList.remove('open'); document.body.style.overflow=''; }
 function bumpFab(){ var f=document.getElementById('cartFab'); if(!f) return; f.classList.remove('bump'); void f.offsetWidth; f.classList.add('bump'); }
 

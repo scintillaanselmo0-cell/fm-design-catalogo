@@ -142,14 +142,29 @@
   .modal-cart:hover { filter:brightness(1.08); }
 
   /* CART FAB */
-  .cart-fab { position:fixed; right:24px; bottom:24px; z-index:150; display:none; align-items:center; gap:8px; background:var(--black); color:var(--white); border:none; cursor:pointer; padding:14px 18px; border-radius:40px; box-shadow:0 10px 30px rgba(0,0,0,.3); font-family:inherit; }
+  .cart-fab { position:fixed; right:24px; bottom:24px; z-index:220; display:none; align-items:center; gap:8px; background:var(--black); color:var(--white); border:none; cursor:pointer; padding:14px 18px; border-radius:40px; box-shadow:0 10px 30px rgba(0,0,0,.3); font-family:inherit; }
   .cart-ico { font-size:18px; }
   .cart-count { background:var(--gold); color:#111; font-weight:700; font-size:12px; min-width:20px; height:20px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; padding:0 6px; }
   .cart-fab.bump { animation:cartBump .4s ease; }
   @keyframes cartBump { 0%{transform:scale(1)} 30%{transform:scale(1.15)} 100%{transform:scale(1)} }
 
+
+  /* QUANTITA' IN SCHEDA PRODOTTO */
+  .qty-row { display:flex; align-items:center; gap:16px; margin:0 0 16px; }
+  .qty-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; opacity:.5; }
+  .qty-stepper { display:flex; align-items:center; gap:0; border:1.5px solid var(--black); }
+  .qty-stepper button { width:36px; height:36px; border:none; background:transparent; cursor:pointer; font-size:18px; line-height:1; font-family:inherit; transition:background .2s,color .2s; }
+  .qty-stepper button:hover { background:var(--black); color:var(--white); }
+  .qty-stepper span { min-width:44px; text-align:center; font-weight:700; font-size:15px; }
+  /* TOAST CONFERMA */
+  .cart-toast { position:fixed; left:50%; top:24px; transform:translate(-50%,-20px); z-index:310; background:var(--black); color:var(--white); padding:14px 22px; display:flex; align-items:center; gap:12px; box-shadow:0 12px 36px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .25s,transform .25s; max-width:90vw; }
+  .cart-toast.show { opacity:1; transform:translate(-50%,0); pointer-events:all; }
+  .cart-toast b { font-size:12px; letter-spacing:1px; }
+  .cart-toast small { display:block; font-size:10px; letter-spacing:2px; opacity:.6; text-transform:uppercase; }
+  .cart-toast button { background:var(--gold); color:#111; border:none; padding:8px 14px; font-size:10px; letter-spacing:2px; font-weight:700; text-transform:uppercase; cursor:pointer; font-family:inherit; white-space:nowrap; }
+
   /* CART PANEL */
-  .cart-overlay { position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.6); display:flex; justify-content:flex-end; opacity:0; pointer-events:none; transition:opacity .3s; backdrop-filter:blur(3px); }
+  .cart-overlay { position:fixed; inset:0; z-index:240; background:rgba(0,0,0,.6); display:flex; justify-content:flex-end; opacity:0; pointer-events:none; transition:opacity .3s; backdrop-filter:blur(3px); }
   .cart-overlay.open { opacity:1; pointer-events:all; }
   .cart-panel { background:var(--bg); width:92vw; max-width:420px; height:100%; display:flex; flex-direction:column; transform:translateX(30px); transition:transform .3s; }
   .cart-overlay.open .cart-panel { transform:translateX(0); }
@@ -219,6 +234,14 @@
     .product-price { font-size:12px; }
     .color-dot { width:10px; height:10px; }
     .model-group-title { font-size:clamp(46px,16vw,80px); margin-bottom:-10px; }
+    /* Carrello flottante sopra la scheda prodotto: lascia spazio ai pulsanti */
+    .modal-body { padding-bottom:92px; }
+    .cart-fab { right:16px; bottom:16px; padding:12px 15px; }
+    .cart-toast { left:12px; right:12px; transform:translate(0,-16px); max-width:none; padding:12px 14px; gap:10px; }
+    .cart-toast.show { transform:translate(0,0); }
+    .cart-toast small { white-space:nowrap; font-size:9px; letter-spacing:1.5px; }
+    .cart-toast b { font-size:11px; letter-spacing:.5px; }
+    .cart-toast button { padding:8px 11px; font-size:9px; letter-spacing:1px; }
   }
 
 /* ─── Modal gallery (multi-photo) ─── */
