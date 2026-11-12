@@ -20,7 +20,10 @@
     <a href="#" onclick="showSection('lavoro')">Poltrone Lavoro</a>
     <a href="#" onclick="showSection('barber')">Barber</a>
     <a href="#" onclick="showSection('postazioni')">Postazioni</a>
-    <a href="#" onclick="alert('Sezione in arrivo!')">Complementi</a>
+    <a href="#" onclick="showSection('complementi')">Complementi</a>
+    <a href="#" onclick="showSection('reception')">Reception</a>
+    <a href="#" onclick="showSection('accessori')">Accessori</a>
+    <a href="#" onclick="showSection('estetica')">Estetica</a>
     <a href="#" class="nav-cta">Contatti</a>
   </nav>
 </header>
@@ -1163,6 +1166,10 @@ function showHome() {
   document.getElementById('lavoro').style.display = 'none';
   document.getElementById('barber').style.display = 'none';
   document.getElementById('postazioni').style.display = 'none';
+  document.getElementById('complementi').style.display = 'none';
+  document.getElementById('reception').style.display = 'none';
+  document.getElementById('accessori').style.display = 'none';
+  document.getElementById('estetica').style.display = 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
