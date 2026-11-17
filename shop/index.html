@@ -1,11 +1,5 @@
-<!doctype html>
-<html lang="it">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>:root{padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>FM Design Shop</title>
-
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@700;800&display=swap">
@@ -154,6 +148,15 @@ main{max-width:var(--maxw);margin:0 auto;
 .co-note{background:rgba(245,245,245,.5);border:1.5px solid var(--line2);padding:14px 16px;font-size:12.5px;line-height:1.65}
 .co-note b{color:#7a5f30}
 
+.co-form{display:flex;flex-direction:column;gap:14px}
+.co-row{display:flex;gap:12px;flex-wrap:wrap}
+.co-field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:5px}
+.co-field label{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;opacity:.6}
+.co-field input{background:rgba(245,245,245,.5);border:1.5px solid var(--line2);padding:11px 13px;font-family:inherit;font-size:14px;color:var(--black);outline:none}
+.co-field input:focus{border-color:var(--black)}
+.co-check{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;cursor:pointer;user-select:none;padding:4px 0}
+.co-check input{width:16px;height:16px;accent-color:var(--black)}
+.co-err{color:#a23a2a;font-size:12.5px;font-weight:600}
 @media(max-width:720px){
   .ov-grid{grid-template-columns:1fr}
   .brand .tag,.vetrina{display:none}
@@ -161,8 +164,7 @@ main{max-width:var(--maxw);margin:0 auto;
   .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 }
 </style>
-</head>
-<body>
+
 <header>
   <div class="bar">
     <a class="brand" href="#"><span class="logo">FM Design</span><span class="tag">SHOP</span></a>
@@ -201,6 +203,10 @@ const EUR = n => "€ " + n.toFixed(2).replace(".", ",");
 const norm = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
 const esc = s => (s||"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const el = (id)=>document.getElementById(id);
+
+// Backend (Supabase Edge Function)
+const CHECKOUT_URL = "https://ooitmnhacdotfhoaxuni.supabase.co/functions/v1/create-checkout";
+const SUPABASE_KEY = "sb_publishable_XjDER0ETO6rFTyaTK6ywsQ_2_MSWMc_";
 
 let INDEX=[], view=[], shown=0, PAGE=48;
 let cat="", query="", onlyStock=false, sort="rel";
@@ -378,22 +384,75 @@ function renderCart(){
 }
 
 function openCheckout(){
+  if(!cart.length)return;
   const tot=cart.reduce((s,x)=>s+x.p*x.q,0);
   const ov=document.createElement("div"); ov.className="ov";
-  ov.innerHTML=`<div class="ov-card" style="max-width:560px">
+  ov.innerHTML=`<div class="ov-card" style="max-width:600px">
     <button class="ovclose">×</button>
     <div class="ov-info" style="padding:30px">
       <h2 class="bebas" style="font-size:40px;letter-spacing:2px">Checkout</h2>
       <div class="totrow"><span class="t-lab">${cart.reduce((s,x)=>s+x.q,0)} articoli</span><span class="t-val num">${EUR(tot)}</span></div>
-      <div class="co-note"><b>Pagamento online in attivazione.</b><br>Vetrina prodotti e carrello sono operativi. Il pagamento con carta (Stripe) e l'invio automatico dell'ordine al fornitore si collegano nello step successivo.</div>
-      <button class="addbig" disabled>Paga con Stripe — in arrivo</button>
+      <form class="co-form" id="co-form">
+        <div class="co-row">
+          <div class="co-field"><label>Nome</label><input name="first" required></div>
+          <div class="co-field"><label>Cognome</label><input name="last" required></div>
+        </div>
+        <div class="co-row">
+          <div class="co-field"><label>Email</label><input name="email" type="email" required></div>
+          <div class="co-field"><label>Telefono</label><input name="phone"></div>
+        </div>
+        <div class="co-field"><label>Indirizzo</label><input name="street" placeholder="Via e numero civico" required></div>
+        <div class="co-row">
+          <div class="co-field" style="max-width:120px"><label>CAP</label><input name="postcode" required></div>
+          <div class="co-field"><label>Città</label><input name="city" required></div>
+          <div class="co-field" style="max-width:90px"><label>Prov.</label><input name="province" maxlength="2"></div>
+        </div>
+        <label class="co-check"><input type="checkbox" id="co-inv"> Voglio la fattura (azienda / P.IVA)</label>
+        <div id="co-fiscal" hidden>
+          <div class="co-field"><label>Ragione sociale</label><input name="company"></div>
+          <div class="co-row">
+            <div class="co-field"><label>P.IVA</label><input name="vat"></div>
+            <div class="co-field"><label>Codice Fiscale</label><input name="tax_code"></div>
+          </div>
+          <div class="co-row">
+            <div class="co-field"><label>Codice SDI</label><input name="sdi"></div>
+            <div class="co-field"><label>PEC</label><input name="pec"></div>
+          </div>
+        </div>
+        <div class="co-err" id="co-err" hidden></div>
+        <button class="addbig" type="submit" id="co-submit">Vai al pagamento · ${EUR(tot)}</button>
+        <div class="ship-note">Pagamento sicuro con Stripe. Spedizione calcolata in base all'indirizzo.</div>
+      </form>
     </div></div>`;
   document.body.appendChild(ov); document.body.style.overflow="hidden";
   const close=()=>{ov.remove();document.body.style.overflow="";};
-  ov.querySelector(".ovclose").onclick=close; ov.onclick=e=>{if(e.target===ov)close();};
+  ov.querySelector(".ovclose").onclick=close;
+  ov.onclick=e=>{if(e.target===ov)close();};
+  const inv=ov.querySelector("#co-inv"), fiscal=ov.querySelector("#co-fiscal");
+  inv.onchange=()=>{fiscal.hidden=!inv.checked;};
+  const form=ov.querySelector("#co-form"), err=ov.querySelector("#co-err"), btn=ov.querySelector("#co-submit");
+  form.onsubmit=async(e)=>{
+    e.preventDefault();
+    err.hidden=true; btn.disabled=true; btn.textContent="Attendere…";
+    const f=new FormData(form), g=k=>(f.get(k)||"").toString().trim();
+    const payload={
+      items:cart.map(x=>({sku:x.k,qty:x.q})),
+      customer:{email:g("email"),first:g("first"),last:g("last"),phone:g("phone")},
+      shipping:{street:g("street"),city:g("city"),postcode:g("postcode"),province:g("province"),country:"IT"},
+      wants_invoice:inv.checked,
+      fiscal:inv.checked?{company:g("company"),vat:g("vat"),tax_code:g("tax_code"),sdi:g("sdi"),pec:g("pec")}:undefined
+    };
+    try{
+      const r=await fetch(CHECKOUT_URL,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},body:JSON.stringify(payload)});
+      const data=await r.json();
+      if(!r.ok||!data.url)throw new Error(data.error||"Errore nel pagamento");
+      window.location.href=data.url;
+    }catch(ex){
+      err.textContent=ex.message||"Errore. Riprova."; err.hidden=false;
+      btn.disabled=false; btn.textContent="Vai al pagamento · "+EUR(tot);
+    }
+  };
 }
 
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ document.querySelector(".ov")?.remove(); document.querySelector(".drawer")?.remove(); document.querySelector(".scrim")?.remove(); document.body.style.overflow=""; }});
 </script>
-</body>
-</html>
