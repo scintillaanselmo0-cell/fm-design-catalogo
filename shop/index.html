@@ -1,5 +1,9 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FM Design Shop</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@700;800&display=swap">
@@ -161,9 +165,41 @@ main{max-width:var(--maxw);margin:0 auto;
   .ov-grid{grid-template-columns:1fr}
   .brand .tag,.vetrina{display:none}
   .hbtn span.lab{display:none}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .bar{gap:10px;padding-block:11px}
+  .brand .logo{font-size:17px;letter-spacing:3px}
+  .search{padding:11px 14px}
+  .search input{font-size:16px}            /* 16px: evita lo zoom automatico iOS al focus */
+  .filters{padding-block:12px 8px}
+  .toolbar{padding-block:2px 14px}
+  .ov{padding:0}
+  .ov-card{min-height:100%}
+  .ov-info{padding:22px 18px}
+  .ov-info h2{font-size:20px}
+  .ov-price{font-size:36px}
+  .gal{padding:16px}
+  .drawer{width:100%}
+}
+@media(max-width:540px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:11px}
+  main{padding-bottom:64px}
+  .cbody{padding:13px 14px 15px;gap:4px}
+  .cname{font-size:13px;min-height:34px}
+  .cbrand{font-size:10px}
+  .price{font-size:25px}
+  .price small{font-size:8.5px}
+  .add{width:40px;height:40px}
+  .hbtn{padding:10px 13px}
+  .chip{padding:8px 13px}
+}
+@media(max-width:380px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .cbody{padding:11px 12px 13px}
+  .price{font-size:23px}
 }
 </style>
+</head>
+<body>
 
 <header>
   <div class="bar">
@@ -456,3 +492,6 @@ function openCheckout(){
 
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ document.querySelector(".ov")?.remove(); document.querySelector(".drawer")?.remove(); document.querySelector(".scrim")?.remove(); document.body.style.overflow=""; }});
 </script>
+
+</body>
+</html>
