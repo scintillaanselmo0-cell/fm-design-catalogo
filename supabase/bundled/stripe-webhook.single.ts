@@ -465,11 +465,17 @@ Deno.serve(async (req) => {
         // Salva l'XML come nota (recupero manuale) — in futuro: upload su Storage / invio a EasyFatt
         await supa.from("orders").update({ notes: xml }).eq("id", orderId);
 
-        // Email di notifica (Resend, se configurato)
+        // Email di notifica (Resend, se configurato) — con XML EasyFatt in allegato
         const resendKey = Deno.env.get("RESEND_API_KEY");
         const adminEmail = Deno.env.get("ADMIN_EMAIL");
         if (resendKey && adminEmail) {
           const lines = items.map((i) => `${i.qty}x ${i.name} (${i.sku})`).join("\n");
+          // base64 UTF-8 sicuro dell'XML da allegare
+          const bytes = new TextEncoder().encode(xml);
+          let bin = "";
+          for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+          const xmlB64 = btoa(bin);
+          const docLabel = order.wants_invoice ? "fattura" : "corrispettivo";
           await fetch("https://api.resend.com/emails", {
             method: "POST",
             headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
@@ -477,7 +483,8 @@ Deno.serve(async (req) => {
               from: "FM Design Shop <onboarding@resend.dev>",
               to: [adminEmail],
               subject: `Nuovo ordine ${order.external_number} — ${order.total_eur} EUR`,
-              text: `Ordine PAGATO ${order.external_number}\nCliente: ${order.customer_email}\nTotale: ${order.total_eur} EUR\n\n${lines}\n\nSpedizione:\n${order.ship_street ?? ""} ${order.ship_postcode ?? ""} ${order.ship_city ?? ""} ${order.ship_province ?? ""}`,
+              text: `Ordine PAGATO ${order.external_number}\nCliente: ${order.customer_email}\nTotale: ${order.total_eur} EUR\nDocumento: ${docLabel}\n\n${lines}\n\nSpedizione:\n${order.ship_street ?? ""} ${order.ship_postcode ?? ""} ${order.ship_city ?? ""} ${order.ship_province ?? ""}\n\nIn allegato l'XML da importare in Danea EasyFatt (Strumenti > Importa > Documenti, tracciato "EasyfattDocuments").`,
+              attachments: [{ filename: `${order.external_number}.xml`, content: xmlB64 }],
             }),
           }).catch((e) => console.error("Email fallita:", e));
         }
