@@ -1,0 +1,9 @@
+# Config Supabase CLI — progetto FM Design Shop
+# project_id: ricavato con `supabase link` (ref del progetto, es. ooitmnhacdotfhoaxuni)
+project_id = "ooitmnhacdotfhoaxuni"
+
+[functions.create-checkout]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
