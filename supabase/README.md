@@ -60,3 +60,9 @@ Dashboard Stripe (Test) → Developers → Webhooks → *Add endpoint*
 - Stripe: chiavi `sk_live_...` + nuovo webhook live.
 - `ACTIVESHOP_USER`/`ACTIVESHOP_PASS` + `SUBMIT_AUTO=true` per l'inoltro automatico al fornitore.
 - Verifica fiscale (IVA, fattura elettronica / corrispettivi via EasyFatt) prima dell'apertura.
+
+## Deploy SENZA terminale (dalla Dashboard)
+Se non usi la CLI, in `supabase/bundled/` ci sono le due funzioni in versione
+**single-file** (tutto incorporato). Dalla Dashboard: Edge Functions → crea
+`create-checkout` e `stripe-webhook`, incolla il rispettivo file `*.single.ts`,
+disattiva "Verify JWT", Deploy. I secret si impostano da Project Settings → Edge Functions.
